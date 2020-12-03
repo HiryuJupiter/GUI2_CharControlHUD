@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c260bf337cace948bde2f801e591f1f, type: 3}
+  m_Name: Slash
+  m_EditorClassIdentifier: 
+  abilityName: Slash
+  description: Left! Right! Left! Right!
+  icon: {fileID: 21300000, guid: 41e73d2506da4d6498e5be225ee0d44a, type: 3}
+  sfx: {fileID: 8752018992337267386, guid: 98c057f17a196b245ac9caa3ad136fde, type: 3}
+  spawnBullet: {fileID: 5343390968922628971, guid: b6b1800a7e1d0e448a3a137b1683ccc9,
+    type: 3}
+  abilityType: 1
+  animationLength: 0.25
+  channelingDuration: 0.2
+  cooldown: 0.2
+  manaCost: 0
+  apCost: 5

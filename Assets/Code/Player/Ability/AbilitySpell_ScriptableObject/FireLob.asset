@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c260bf337cace948bde2f801e591f1f, type: 3}
+  m_Name: FireLob
+  m_EditorClassIdentifier: 
+  abilityName: Fire Lob
+  description: Throw a fire ball at the enemy!
+  icon: {fileID: 21300000, guid: b5b3ff38597727f419de0152f548e52b, type: 3}
+  sfx: {fileID: 8752018992337267386, guid: 4c92fc1d0dd457949bef9e3e24886e9c, type: 3}
+  spawnBullet: {fileID: 446321083797455725, guid: 80bd3aaee4573374785e5851806c3323,
+    type: 3}
+  abilityType: 3
+  animationLength: 0
+  channelingDuration: 0.1
+  cooldown: 2
+  manaCost: 25
+  apCost: 0
