@@ -12,9 +12,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     HUDManager hud;
     DeadScreen deadScreen;
-    AbilitiesHotbar hotbar;
-    StatPageOpener inventoryPage;
 
+    AbilitiesHotbar hotbar;
 
     #region MonoBehavior
     void Awake()
@@ -26,13 +25,7 @@ public class UIManager : MonoBehaviour
         deadScreen      = GetComponent<DeadScreen>();
 
         hud             = GetComponentInChildren<HUDManager>();
-        inventoryPage   = GetComponentInChildren<StatPageOpener>();
         hotbar          = GetComponentInChildren<AbilitiesHotbar>();
-    }
-
-    void Start()
-    {
-        
     }
     #endregion
 

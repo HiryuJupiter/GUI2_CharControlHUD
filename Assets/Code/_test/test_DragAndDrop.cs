@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class test_DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+//Order of IPointer events:
+//PointerDown, BeginDrag, Drag, PointUp, Click, OnEndDrag
+
+public class test_DragAndDrop : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
 {
+    GameObject clickedObject;
+
     RectTransform rectTransform;
+    static bool dragging;
 
     void Awake ()
     {
@@ -33,21 +39,49 @@ public class test_DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHa
         //eventData.lastPress is the gameobject you started the drag from, not the most recent objet you passed over, nor the object the mouseButtonUp is on.
 
         //eventData.button is the mouse button you are dragging with
+        RaycastResult result = eventData.pointerCurrentRaycast;
+        if (result.gameObject != null)
+        {
+            test_DropReceiver script = result.gameObject.GetComponent<test_DropReceiver>();
+            if (script != null)
+            {
+                Debug.Log("Can swap image");
+            }
+        }
+        Debug.Log("[On end drag. PointerCurrentRaycast] = " + result);
+    }
 
-        Debug.Log(", [SelectedObject] = " + eventData.selectedObject + "[PointerCurrentRaycast] = " + eventData.pointerCurrentRaycast);
-
-        //if (event)
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log("[OnPointerClick]");
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log(" on pointer down");
+        clickedObject = eventData.lastPress;
+
+        Debug.Log("[OnPointerDown]");
     }
 
-    public void OnDrop(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("A_Drop received");
+
+        Debug.Log("[On Pointer Up]");
+        if (!dragging  && gameObject == eventData.lastPress)
+        {
+            //If we didn't drag 
+            Debug.Log(" I am clicked!");
+        }
+        clickedObject = null;
     }
+
+    void OnGUI ()
+    {
+        GUI.Label(new Rect(20, 20, 200, 20), "clickedObject: " + clickedObject);
+        GUI.Label(new Rect(20, 40, 200, 20), "dragging: " + dragging);
+    }
+
+
 }
 
 /*

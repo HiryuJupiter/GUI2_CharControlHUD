@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[DefaultExecutionOrder(-100000000)] //This has to run before the managers
+[DefaultExecutionOrder(-100)] //This has to run before the managers
 public class PlayerAbilityDirectory : MonoBehaviour
 {
     public static PlayerAbilityDirectory Instance;

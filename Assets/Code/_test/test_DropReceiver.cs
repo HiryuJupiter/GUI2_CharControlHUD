@@ -14,7 +14,6 @@ public class test_DropReceiver : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-
         Debug.Log("B_Drop received");
     }
 }

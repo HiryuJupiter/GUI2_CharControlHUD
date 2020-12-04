@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//[DefaultExecutionOrder(-1)]
 [RequireComponent(typeof(Player3DAnimator))]
 [RequireComponent(typeof(PlayerColorAssigner))]
 [RequireComponent(typeof(Player3rdPersonCamera))]
@@ -27,9 +26,9 @@ public class PlayerFeedbacks : MonoBehaviour
 
     void Awake()
     {
-        Animator = GetComponent<Player3DAnimator>();
-        playerColorAssigner = GetComponent<PlayerColorAssigner>();
-        cameraController = GetComponent<Player3rdPersonCamera>();
+        Animator                = GetComponent<Player3DAnimator>();
+        playerColorAssigner     = GetComponent<PlayerColorAssigner>();
+        cameraController        = GetComponent<Player3rdPersonCamera>();
 
         //Cache the scales 
         faceRightScale = transform.localScale;

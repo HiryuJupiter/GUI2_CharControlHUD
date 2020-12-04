@@ -6,25 +6,16 @@ public class SceneManager : MonoBehaviour
 {
     //Consts
     const int SceneIndex_MainMenu = 0;
-    const int StartingHealth = 3; //Max health
-    const int StartingMoney = 100; 
 
     //Static
     public static SceneManager Instance;
-
 
     //References
     UIManager ui;
     PauseMenu pauseMenu;
 
-    //Stats
-    int waveNumber;
-    int money = StartingMoney;
-    int lives = StartingHealth;
-
     //State
-    [SerializeField] GameState[] states;
-
+    GameState[] states;
 
     //Properties
     public static GameStates gameState { get; set; } = GameStates.CharacterControl;
@@ -33,7 +24,6 @@ public class SceneManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-
     }
 
     void Start()
@@ -53,10 +43,6 @@ public class SceneManager : MonoBehaviour
             pauseMenu.TogglePause();
         }
     }
-    #endregion
-
-    #region Public - stats change
-
     #endregion
 
     #region Public - events

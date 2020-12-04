@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[DefaultExecutionOrder(-9000)] 
+[DefaultExecutionOrder(-10000)] 
 public class CharacterSettings : MonoBehaviour
 {
     public static CharacterSettings instance { get; set; }

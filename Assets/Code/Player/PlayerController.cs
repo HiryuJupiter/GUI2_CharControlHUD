@@ -3,14 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-[DefaultExecutionOrder(-100)]
+[DefaultExecutionOrder(-101)]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(MotorRaycaster))]
 [RequireComponent(typeof(Player3rdPersonCamera))]
 public class PlayerController : MonoBehaviour
 {
-    
-
     public static PlayerController Instance;
 
     //Class and components
@@ -20,9 +18,8 @@ public class PlayerController : MonoBehaviour
     PlayerResourceManagement resourceManagement;
     PlayerAbilityDirectory directory;
     UIManager ui;
-    
-    UIInventory uiInventory;
-    UIInventory uiConsumableBar; //We treat the consumable bar as an inventory system with limited functionalities
+
+    SlotManager_Equipment inventory;
 
     //States
     MotorStates currentStateType;
@@ -42,10 +39,10 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         //Reference
-        Rb = GetComponent<Rigidbody>();
-        Raycaster = GetComponent<MotorRaycaster>();
-        feedback = GetComponentInChildren<PlayerFeedbacks>();
-        cameraController = GetComponent<Player3rdPersonCamera>();
+        Rb                  = GetComponent<Rigidbody>();
+        Raycaster           = GetComponent<MotorRaycaster>();
+        feedback            = GetComponentInChildren<PlayerFeedbacks>();
+        cameraController    = GetComponent<Player3rdPersonCamera>();
 
         //Initialize
         Instance = this;
@@ -69,15 +66,13 @@ public class PlayerController : MonoBehaviour
         gameData = PersistentGameData.Instance;
         ui = UIManager.Instance;
         directory = PlayerAbilityDirectory.Instance;
-        uiInventory = UIInventory.Instance;
+        inventory = SlotManager_Equipment.Instance;
 
         //Reference game data and use it to initialize the game
         data = gameData.SaveFile;
 
         //UI
         ui.UpdateAllPlayerInfo(data);
-        uiInventory.InitializeInventory(data.inventory);
-        uiConsumableBar.InitializeInventory(data.consumableBarInventory);
 
         //Model color
         feedback.playerColorAssigner.UpdateColor(gameData.SaveFile);
@@ -111,10 +106,10 @@ public class PlayerController : MonoBehaviour
         if (layerInteractable == (layerInteractable | 1 << col.gameObject.layer))
         {
             Debug.Log(" Player hits an interactable item: " + col.name);
-            PickupItem pickupItem = col.GetComponent<PickupItem>();
-            if (pickupItem != null)
+            Item item = col.GetComponent<Item>();
+            if (item != null)
             {
-                if (data.inventory.TryAddItem(pickupItem.GetItem()))
+                if (inventory.TryPickUpItem(item))
                 {
                     Destroy(col.gameObject);
                 }
@@ -218,41 +213,41 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    //void OnGUI()
-    //{
-    //    GUI.Label(new Rect(20, 20, 500, 20), "Current State: " + currentStateType);
+    void OnGUI()
+    {
+        GUI.Label(new Rect(20, 20, 500, 20), "Current State: " + currentStateType);
 
-    //    GUI.Label(new Rect(20, 60, 290, 20), "=== GROUND MOVE === ");
-    //    GUI.Label(new Rect(20, 80, 290, 20), "OnGround: " + status.isOnGround);
-    //    GUI.Label(new Rect(20, 100, 290, 20), "onGroundPrevious: " + status.isOnGroundPrevious);
-    //    GUI.Label(new Rect(20, 120, 290, 20), "GameInput.MoveX: " + GameInput.MoveX);
-    //    GUI.Label(new Rect(20, 180, 290, 20), "currentVelocity: " + status.currentVelocity);
+        GUI.Label(new Rect(20, 60, 290, 20), "=== GROUND MOVE === ");
+        GUI.Label(new Rect(20, 80, 290, 20), "OnGround: " + status.isOnGround);
+        GUI.Label(new Rect(20, 100, 290, 20), "onGroundPrevious: " + status.isOnGroundPrevious);
+        GUI.Label(new Rect(20, 120, 290, 20), "GameInput.MoveX: " + GameInput.MoveX);
+        GUI.Label(new Rect(20, 180, 290, 20), "currentVelocity: " + status.currentVelocity);
 
 
-    //    GUI.Label(new Rect(200, 0, 290, 20), "=== JUMPING === ");
-    //    GUI.Label(new Rect(200, 20, 290, 20), "coyoteTimer: " + status.coyoteTimer);
-    //    GUI.Label(new Rect(200, 40, 290, 20), "jumpQueueTimer: " + status.jumpQueueTimer);
-    //    GUI.Label(new Rect(200, 60, 290, 20), "GameInput.JumpBtnDown: " + GameInput.JumpBtnDown);
-    //    GUI.Label(new Rect(200, 80, 290, 20), "jumping: " + status.isJumping);
+        GUI.Label(new Rect(200, 0, 290, 20), "=== JUMPING === ");
+        GUI.Label(new Rect(200, 20, 290, 20), "coyoteTimer: " + status.coyoteTimer);
+        GUI.Label(new Rect(200, 40, 290, 20), "jumpQueueTimer: " + status.jumpQueueTimer);
+        GUI.Label(new Rect(200, 60, 290, 20), "GameInput.JumpBtnDown: " + GameInput.JumpBtnDown);
+        GUI.Label(new Rect(200, 80, 290, 20), "jumping: " + status.isJumping);
 
-    //    GUI.Label(new Rect(400, 0, 290, 20), "=== INPUT === ");
-    //    GUI.Label(new Rect(400, 20, 290, 20), "MoveX: " + GameInput.MoveX);
-    //    GUI.Label(new Rect(400, 40, 290, 20), "MoveZ: " + GameInput.MoveZ);
+        GUI.Label(new Rect(400, 0, 290, 20), "=== INPUT === ");
+        GUI.Label(new Rect(400, 20, 290, 20), "MoveX: " + GameInput.MoveX);
+        GUI.Label(new Rect(400, 40, 290, 20), "MoveZ: " + GameInput.MoveZ);
 
-    //    GUI.Label(new Rect(600, 0, 290, 20), "=== CURRENT ABILITY === ");
-    //    GUI.Label(new Rect(600, 20, 290, 20), "nextAbility: " + status.nextAbility);
-    //    GUI.Label(new Rect(600, 40, 290, 20), "attackQueueTimer: " + status.attackQueueTimer);
-    //    GUI.Label(new Rect(600, 60, 290, 20), "loseControlTimer: " + status.channelingTimer);
-    //    //GUI.Label(new Rect(600, 80, 290, 20), "is cd ready: " + status.nextAbility.IsCooldownReady);
-    //    //GUI.Label(new Rect(600, 100, 290, 20), "is cd ready: " + status.nextAbility.Cooldown);
+        GUI.Label(new Rect(600, 0, 290, 20), "=== CURRENT ABILITY === ");
+        GUI.Label(new Rect(600, 20, 290, 20), "nextAbility: " + status.nextAbility);
+        GUI.Label(new Rect(600, 40, 290, 20), "attackQueueTimer: " + status.attackQueueTimer);
+        GUI.Label(new Rect(600, 60, 290, 20), "loseControlTimer: " + status.channelingTimer);
+        //GUI.Label(new Rect(600, 80, 290, 20), "is cd ready: " + status.nextAbility.IsCooldownReady);
+        //GUI.Label(new Rect(600, 100, 290, 20), "is cd ready: " + status.nextAbility.Cooldown);
 
-    //    GUI.Label(new Rect(800, 0, 290, 20), "=== CURRENT ABILITY === ");
-    //    GUI.Label(new Rect(800, 20, 290, 20), "ability 1: " + gameData.Player.abilityLoadout.abilities[0]);
-    //    GUI.Label(new Rect(800, 40, 290, 20), "ability 2: " + gameData.Player.abilityLoadout.abilities[1]);
-    //    GUI.Label(new Rect(800, 60, 290, 20), "ability 3: " + gameData.Player.abilityLoadout.abilities[2]);
+        GUI.Label(new Rect(800, 0, 290, 20), "=== CURRENT ABILITY === ");
+        GUI.Label(new Rect(800, 20, 290, 20), "ability 1: " + gameData.SaveFile.abilityLoadout.abilities[0]);
+        GUI.Label(new Rect(800, 40, 290, 20), "ability 2: " + gameData.SaveFile.abilityLoadout.abilities[1]);
+        GUI.Label(new Rect(800, 60, 290, 20), "ability 3: " + gameData.SaveFile.abilityLoadout.abilities[2]);
 
-    //    //GUI.Label(new Rect(300, 120,		290, 20), "testLocation: " + testLocation);
-    //}
+        //GUI.Label(new Rect(300, 120,		290, 20), "testLocation: " + testLocation);
+    }
 }
 
 

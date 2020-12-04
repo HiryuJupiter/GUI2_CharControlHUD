@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[DefaultExecutionOrder(-100)]
+[DefaultExecutionOrder(-2)]
 public class Player3rdPersonCamera : MonoBehaviour
 {
     const float MinAngle = 1;

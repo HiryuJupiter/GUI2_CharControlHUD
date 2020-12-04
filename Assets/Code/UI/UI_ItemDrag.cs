@@ -19,10 +19,6 @@ public class UI_ItemDrag : MonoBehaviour
         image = GetComponent<Image>();
     }
 
-    void Start()
-    {
-    }
-
     void Update()
     {
         if (showing)
@@ -36,7 +32,7 @@ public class UI_ItemDrag : MonoBehaviour
         this.item = item;
         showing = true;
         image.enabled = true;
-        image.sprite = ItemIconsDirectory.GetSprite(item.itemType);
+        image.sprite = ItemDirectory.GetItem(item.ID).icon;
     }
 
     public void ClearAndHide ()

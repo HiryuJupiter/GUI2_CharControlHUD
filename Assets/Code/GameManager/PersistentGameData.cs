@@ -2,7 +2,7 @@
 using System.Collections;
 
 public enum LoadMode { DoNothing, StartNew, Load }
-
+[DefaultExecutionOrder(-10)]
 public class PersistentGameData : MonoBehaviour
 { 
     public static PersistentGameData Instance;
@@ -37,6 +37,7 @@ public class PersistentGameData : MonoBehaviour
 
     void LoadGame ()
     {
+        Debug.Log("PersistentGameData + load game ");
         switch (loadMode)
         {
             case LoadMode.StartNew:
