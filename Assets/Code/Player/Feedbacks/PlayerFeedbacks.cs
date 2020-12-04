@@ -58,8 +58,11 @@ public class PlayerFeedbacks : MonoBehaviour
     public void SetFacingBasedOnMovement()
     {
         Vector3 vel = player.status.currentVelocity;
-        vel.y = 0f;
-        SetFacing(Quaternion.LookRotation(cameraController.NonTiltedRotationTowardsPlayer * vel, Vector3.up));
+        if (vel != Vector3.zero)
+        {
+            vel.y = 0f;
+            SetFacing(Quaternion.LookRotation(cameraController.NonTiltedRotationTowardsPlayer * vel, Vector3.up));
+        }
     }
 
     void SetFacing(Quaternion facing)

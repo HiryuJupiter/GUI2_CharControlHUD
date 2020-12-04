@@ -149,7 +149,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 874cc448a04e75340994d6e67b61b290, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f73e731ec7c49a94b9f5aafde7a89916, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -169,10 +169,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8428715670431713385}
+  - component: {fileID: 8428715670431713384}
   - component: {fileID: 2290477687027487975}
-  - component: {fileID: 5484902730733380550}
   m_Layer: 14
-  m_Name: ItemConsumable
+  m_Name: _ItemTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,6 +194,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8428715670431713384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8428715670431713387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1826ea40555775948b163c866d4c3273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 101
+  itemName: MyArmor
+  description: Armor description
+  price: 50
+  icon: {fileID: 21300000, guid: f73e731ec7c49a94b9f5aafde7a89916, type: 3}
+  stacks: 1
 --- !u!65 &2290477687027487975
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -207,21 +225,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.9, y: 2.9, z: 2.9}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5484902730733380550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8428715670431713387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a80c33ac808f614bb97c45d027968bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ID: 1001
-  itemName: Potion
-  description: Restores health
-  price: 5
-  icon: {fileID: 21300000, guid: 874cc448a04e75340994d6e67b61b290, type: 3}
-  stacks: 1

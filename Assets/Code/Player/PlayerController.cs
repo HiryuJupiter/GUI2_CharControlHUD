@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     PlayerAbilityDirectory directory;
     UIManager ui;
 
-    SlotManager_Equipment inventory;
+    Inventory_Bag inventory;
 
     //States
     MotorStates currentStateType;
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
         gameData = PersistentGameData.Instance;
         ui = UIManager.Instance;
         directory = PlayerAbilityDirectory.Instance;
-        inventory = SlotManager_Equipment.Instance;
+        inventory = Inventory_Bag.Instance;
 
         //Reference game data and use it to initialize the game
         data = gameData.SaveFile;
@@ -213,41 +213,41 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    void OnGUI()
-    {
-        GUI.Label(new Rect(20, 20, 500, 20), "Current State: " + currentStateType);
+    //void OnGUI()
+    //{
+    //    GUI.Label(new Rect(20, 20, 500, 20), "Current State: " + currentStateType);
 
-        GUI.Label(new Rect(20, 60, 290, 20), "=== GROUND MOVE === ");
-        GUI.Label(new Rect(20, 80, 290, 20), "OnGround: " + status.isOnGround);
-        GUI.Label(new Rect(20, 100, 290, 20), "onGroundPrevious: " + status.isOnGroundPrevious);
-        GUI.Label(new Rect(20, 120, 290, 20), "GameInput.MoveX: " + GameInput.MoveX);
-        GUI.Label(new Rect(20, 180, 290, 20), "currentVelocity: " + status.currentVelocity);
+    //    GUI.Label(new Rect(20, 60, 290, 20), "=== GROUND MOVE === ");
+    //    GUI.Label(new Rect(20, 80, 290, 20), "OnGround: " + status.isOnGround);
+    //    GUI.Label(new Rect(20, 100, 290, 20), "onGroundPrevious: " + status.isOnGroundPrevious);
+    //    GUI.Label(new Rect(20, 120, 290, 20), "GameInput.MoveX: " + GameInput.MoveX);
+    //    GUI.Label(new Rect(20, 180, 290, 20), "currentVelocity: " + status.currentVelocity);
 
 
-        GUI.Label(new Rect(200, 0, 290, 20), "=== JUMPING === ");
-        GUI.Label(new Rect(200, 20, 290, 20), "coyoteTimer: " + status.coyoteTimer);
-        GUI.Label(new Rect(200, 40, 290, 20), "jumpQueueTimer: " + status.jumpQueueTimer);
-        GUI.Label(new Rect(200, 60, 290, 20), "GameInput.JumpBtnDown: " + GameInput.JumpBtnDown);
-        GUI.Label(new Rect(200, 80, 290, 20), "jumping: " + status.isJumping);
+    //    GUI.Label(new Rect(200, 0, 290, 20), "=== JUMPING === ");
+    //    GUI.Label(new Rect(200, 20, 290, 20), "coyoteTimer: " + status.coyoteTimer);
+    //    GUI.Label(new Rect(200, 40, 290, 20), "jumpQueueTimer: " + status.jumpQueueTimer);
+    //    GUI.Label(new Rect(200, 60, 290, 20), "GameInput.JumpBtnDown: " + GameInput.JumpBtnDown);
+    //    GUI.Label(new Rect(200, 80, 290, 20), "jumping: " + status.isJumping);
 
-        GUI.Label(new Rect(400, 0, 290, 20), "=== INPUT === ");
-        GUI.Label(new Rect(400, 20, 290, 20), "MoveX: " + GameInput.MoveX);
-        GUI.Label(new Rect(400, 40, 290, 20), "MoveZ: " + GameInput.MoveZ);
+    //    GUI.Label(new Rect(400, 0, 290, 20), "=== INPUT === ");
+    //    GUI.Label(new Rect(400, 20, 290, 20), "MoveX: " + GameInput.MoveX);
+    //    GUI.Label(new Rect(400, 40, 290, 20), "MoveZ: " + GameInput.MoveZ);
 
-        GUI.Label(new Rect(600, 0, 290, 20), "=== CURRENT ABILITY === ");
-        GUI.Label(new Rect(600, 20, 290, 20), "nextAbility: " + status.nextAbility);
-        GUI.Label(new Rect(600, 40, 290, 20), "attackQueueTimer: " + status.attackQueueTimer);
-        GUI.Label(new Rect(600, 60, 290, 20), "loseControlTimer: " + status.channelingTimer);
-        //GUI.Label(new Rect(600, 80, 290, 20), "is cd ready: " + status.nextAbility.IsCooldownReady);
-        //GUI.Label(new Rect(600, 100, 290, 20), "is cd ready: " + status.nextAbility.Cooldown);
+    //    GUI.Label(new Rect(600, 0, 290, 20), "=== CURRENT ABILITY === ");
+    //    GUI.Label(new Rect(600, 20, 290, 20), "nextAbility: " + status.nextAbility);
+    //    GUI.Label(new Rect(600, 40, 290, 20), "attackQueueTimer: " + status.attackQueueTimer);
+    //    GUI.Label(new Rect(600, 60, 290, 20), "loseControlTimer: " + status.channelingTimer);
+    //    //GUI.Label(new Rect(600, 80, 290, 20), "is cd ready: " + status.nextAbility.IsCooldownReady);
+    //    //GUI.Label(new Rect(600, 100, 290, 20), "is cd ready: " + status.nextAbility.Cooldown);
 
-        GUI.Label(new Rect(800, 0, 290, 20), "=== CURRENT ABILITY === ");
-        GUI.Label(new Rect(800, 20, 290, 20), "ability 1: " + gameData.SaveFile.abilityLoadout.abilities[0]);
-        GUI.Label(new Rect(800, 40, 290, 20), "ability 2: " + gameData.SaveFile.abilityLoadout.abilities[1]);
-        GUI.Label(new Rect(800, 60, 290, 20), "ability 3: " + gameData.SaveFile.abilityLoadout.abilities[2]);
+    //    GUI.Label(new Rect(800, 0, 290, 20), "=== CURRENT ABILITY === ");
+    //    GUI.Label(new Rect(800, 20, 290, 20), "ability 1: " + gameData.SaveFile.abilityLoadout.abilities[0]);
+    //    GUI.Label(new Rect(800, 40, 290, 20), "ability 2: " + gameData.SaveFile.abilityLoadout.abilities[1]);
+    //    GUI.Label(new Rect(800, 60, 290, 20), "ability 3: " + gameData.SaveFile.abilityLoadout.abilities[2]);
 
-        //GUI.Label(new Rect(300, 120,		290, 20), "testLocation: " + testLocation);
-    }
+    //    //GUI.Label(new Rect(300, 120,		290, 20), "testLocation: " + testLocation);
+    //}
 }
 
 

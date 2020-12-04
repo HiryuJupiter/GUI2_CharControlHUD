@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SlotManager_Consumable : SlotManager
+public class Inventory_Consumable : Inventory
 {
     void Awake()
     {
@@ -15,6 +15,6 @@ public class SlotManager_Consumable : SlotManager
         //Load data from game data
         itemList = PersistentGameData.Instance.SaveFile.consumableBarItems;
         //Conditional
-        UIConsumableInventory.Instance.Initialize(this);
+        UISlotManager_ConsumableBar.Instance.Initialize(this);
     }
 }

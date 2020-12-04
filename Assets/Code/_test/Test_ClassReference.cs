@@ -6,39 +6,62 @@ using System.Collections.Generic;
 public class Test_ClassReference : MonoBehaviour
 {
     //equipmentItems      = new ItemSaveFile[EquipmentSlots];
-    class Test1
+    class DailyItemClass
     {
-        public int i = 2;
-
-        public Test1()
+        public DailyItems itemType;
+        public DailyItemClass(DailyItems itemType)
         {
-
-        }
-
-        public Test1(int i)
-        {
-            this.i = i;
+            this.itemType = itemType;
         }
     }
+
+    enum DailyItems { cat, fridge, car, box, iron, pizza}
+
+    List<DailyItemClass> list = new List<DailyItemClass>
+    {
+        new DailyItemClass(DailyItems.car),
+        new DailyItemClass(DailyItems.fridge),
+        new DailyItemClass(DailyItems.car),
+        new DailyItemClass(DailyItems.cat),
+        new DailyItemClass(DailyItems.fridge),
+    };
 
     void Start()
     {
-        //ItemSaveFile[] simps1 = new ItemSaveFile[3];
+        Debug.Log("no sorting");
+        foreach (var item in list)
+        {
+            Debug.Log(item.itemType);
+        }
+        Debug.Log("----------");
 
-        //Debug.Log("" + (simps1[0] == null) );
-        //Debug.Log("" + (simps1[0] == null) );
-        //Debug.Log("" + (simps1[0] == null) );
-        //Debug.Log("" + (simps1[0] == null) );
-        //Debug.Log("" + (simps1[0] == null) );
-
-        List<int> list = new List<int> { 2, 3, 5, 6, 7, 5, 33, 1, 2 };
-        int[] sortingMap = new int[] { 2, 3, 6, 7 };
-        list.OrderBy(x => sortingMap[x]);
+        
+        list = list.OrderBy(x => sortingMap2[(int)x.itemType]).ToList();
+        //list.OrderBy(x => sortingMap[x]);
 
         foreach (var item in list)
         {
-
-            Debug.Log(" :" + item);
+            Debug.Log(" :" + item.itemType);
         }
+
+        //Debug.Log("sss :" + sortingMap[2]);
     }
+
+    int[] sortingMap = new int[]
+        {
+            (int) DailyItems.car,
+            (int) DailyItems.fridge,
+            (int) DailyItems.iron,
+            (int) DailyItems.cat,
+            (int) DailyItems.pizza,
+        };
+
+    int[] sortingMap2 = new int[]
+    {
+            (int) DailyItems.pizza,
+            (int) DailyItems.car,
+            (int) DailyItems.fridge,
+            (int) DailyItems.cat,
+            (int) DailyItems.iron,
+    };
 }

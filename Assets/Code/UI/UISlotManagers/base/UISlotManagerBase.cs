@@ -3,21 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public abstract class UIInventory : MonoBehaviour
+public abstract class UISlotManagerBase
+    : MonoBehaviour
 {
     [SerializeField] protected CanvasGroup canvasGroup;
     [SerializeField] protected List<UIItemSlot> Slots = new List<UIItemSlot>();
-    protected SlotManager inventory;
+    protected Inventory inventory;
 
     protected int[] sortingMap;
     protected bool sortOn = false;
     protected bool isOpen;
 
 
-    public virtual void Initialize(SlotManager inventory)
+    public virtual void Initialize(Inventory inventory)
     {
         this.inventory = inventory;
         inventory.OnItemListChanged += RefreshInventoryDisplay;
+        inventory.OnSlotChanged += RefreshSlotDisplay;
 
         for (int i = 0; i < Slots.Count; i++)
         {
@@ -28,6 +30,65 @@ public abstract class UIInventory : MonoBehaviour
         RefreshInventoryDisplay();
     }
 
+    protected virtual void RefreshSlotDisplay (int slotIndex)
+    {
+        Slots[slotIndex].SetSlotWithoutNotifyingInventory(inventory.ItemList[slotIndex]);
+    }
+
+    protected virtual void RefreshInventoryDisplay()
+    {
+        if (!isOpen) return;
+
+        //Sort the items
+        if (sortOn)
+        {
+            inventory.ReorderingInventory(sortingMap);
+        }
+            
+        //Go through all slots and set them accordingly
+        for (int i = 0; i < Slots.Count; i++)
+        {
+            Slots[i].SetSlotWithoutNotifyingInventory(inventory.ItemList[i]);
+            ////Set the slots within the item range to display items, and the ones outside the range to be empty.
+            //if (i < inventory.ItemList.Length)
+            //{
+            //    Slots[i].SetSlotWithoutNotifyingInventory(inventory.ItemList[i]);
+            //}
+            //else
+            //{
+            //    Slots[i].ClearSlotWithoutNotifyingInventory();
+            //}
+        }
+    }
+
+    public void ToggleOpen()
+    {
+        SetIsOpen(isOpen = !isOpen);
+    }
+
+    public virtual void SetIsOpen(bool isOpen)
+    {
+        if (isOpen)
+        {
+            CanvasGroupUtil.InstantReveal(canvasGroup);
+            RefreshInventoryDisplay();
+        }
+        else
+        {
+            CanvasGroupUtil.InstantHide(canvasGroup);
+        }
+
+        this.isOpen = isOpen;
+    }
+
+    void OnDestroy()
+    {
+        inventory.OnItemListChanged -= RefreshInventoryDisplay;
+        inventory.OnSlotChanged -= RefreshSlotDisplay;
+    }
+}
+
+/*
     protected virtual void RefreshInventoryDisplay()
     {
         if (!isOpen) return;
@@ -36,9 +97,10 @@ public abstract class UIInventory : MonoBehaviour
         //List<Item> items = sortOn ? inventory.ItemList.OrderBy(x => sortingMap[(int)(x.ItemType)]).ToList() : inventory.ItemList;
 
         //Sort the items
-        List<Item> items;
         if (sortOn)
         {
+            inventory.ReorderingInventory(sortingMap);
+
             //Select the items where the ID is not empty, and then get the item from the item directory
             var i = inventory.ItemList.Where(x => x.ID != ItemID.Empty).Select(x => ItemDirectory.GetItem(x.ID));
             items = i.OrderBy(x => sortingMap[(int)(x.ItemType)]).ToList();
@@ -62,23 +124,5 @@ public abstract class UIInventory : MonoBehaviour
             }
         }
     }
+ */
 
-    public void ToggleOpen()
-    {
-        SetIsOpen(isOpen = !isOpen);
-    }
-    public virtual void SetIsOpen(bool isOpen)
-    {
-        if (isOpen)
-        {
-            CanvasGroupUtil.InstantReveal(canvasGroup);
-            RefreshInventoryDisplay();
-        }
-        else
-        {
-            CanvasGroupUtil.InstantHide(canvasGroup);
-        }
-
-        this.isOpen = isOpen;
-    }
-}

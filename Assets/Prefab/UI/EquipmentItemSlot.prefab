@@ -152,12 +152,12 @@ PrefabInstance:
     - target: {fileID: 1794843251026291092, guid: 88a1ba339951d7e49a30bc707c3f7ee6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -535
+      value: -531
       objectReference: {fileID: 0}
     - target: {fileID: 1794843251026291092, guid: 88a1ba339951d7e49a30bc707c3f7ee6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 220
+      value: 367
       objectReference: {fileID: 0}
     - target: {fileID: 1794843251026291092, guid: 88a1ba339951d7e49a30bc707c3f7ee6,
         type: 3}
@@ -199,12 +199,28 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1794843251026291094, guid: 88a1ba339951d7e49a30bc707c3f7ee6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1794843251026291099, guid: 88a1ba339951d7e49a30bc707c3f7ee6,
         type: 3}
       propertyPath: m_Name
-      value: EquipmentItemSlot (1)
+      value: EquipmentItemSlot
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7646065735189132332, guid: 88a1ba339951d7e49a30bc707c3f7ee6,
+        type: 3}
+      propertyPath: highlightColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646065735189132332, guid: 88a1ba339951d7e49a30bc707c3f7ee6,
+        type: 3}
+      propertyPath: highlightColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1794843251026291094, guid: 88a1ba339951d7e49a30bc707c3f7ee6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 88a1ba339951d7e49a30bc707c3f7ee6, type: 3}
 --- !u!224 &8629119553419804864 stripped
 RectTransform:

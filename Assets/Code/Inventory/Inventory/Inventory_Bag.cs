@@ -3,15 +3,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SlotManager_Bag : SlotManager
+public class Inventory_Bag : Inventory
 {
+    public static Inventory_Bag Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         //Load data from game data
         itemList = PersistentGameData.Instance.SaveFile.bagItems;
         //Conditional
-        UIBagInventory.Instance.Initialize(this);
+        UISlotManager_Bag.Instance.Initialize(this);
 
+        //DEBUG ONLY
         TryPickUpItem(new ItemSaveFile(ItemID.weapon, 1));
         TryPickUpItem(new ItemSaveFile(ItemID.armor, 2));
         TryPickUpItem(new ItemSaveFile(ItemID.potion, 3));

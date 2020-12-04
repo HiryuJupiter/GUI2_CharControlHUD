@@ -4,12 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class UIConsumableInventory : UIInventory
+public class UISlotManager_ConsumableBar : UISlotManagerBase
 {
-    public static UIConsumableInventory Instance;
+    public static UISlotManager_ConsumableBar Instance;
     
     void Awake()
     {
+        isOpen = true;
         Instance = this;
     }
 }

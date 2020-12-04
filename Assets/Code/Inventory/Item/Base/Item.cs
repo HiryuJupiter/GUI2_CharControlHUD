@@ -31,6 +31,17 @@ public abstract class  Item : MonoBehaviour
     }
 
     public GameObject SpawnItem(Vector3 position) => Instantiate(gameObject, position, Quaternion.identity);
+
+    IEnumerator Start ()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GetComponent<Collider>().enabled = true;
+    }
+
+    void Update()
+    {
+        transform.rotation = GlobalRotation.CoinRotation;
+    }
 }
 
 //public void SetItem(ItemSaveFile item)

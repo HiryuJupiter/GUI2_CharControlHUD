@@ -3,9 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SlotManager_Equipment : SlotManager
+public class Inventory_Equipment : Inventory
 {
-    public static SlotManager_Equipment Instance;
+    public static Inventory_Equipment Instance;
 
     const int WeaponL = 0;
     const int WeaponR = 1;
@@ -25,7 +25,7 @@ public class SlotManager_Equipment : SlotManager
         //Load data from game data
         itemList = PersistentGameData.Instance.SaveFile.equipmentItems;
 
-        UIEquipmentInventory.Instance.Initialize(this);
+        UISlotManager_Equipment.Instance.Initialize(this);
     }
 }
 
