@@ -6,7 +6,7 @@ public class DragAndDrop : MonoBehaviour
 {
     public static DragAndDrop Instance { get; private set; }
 
-    public bool dragging = false;
+    public static bool IsDragging { get; private set; }
 
     public Image image;
     public RectTransform spriteTransform;
@@ -21,7 +21,7 @@ public class DragAndDrop : MonoBehaviour
 
     void Update()
     {
-        if (dragging)
+        if (IsDragging)
         {
             spriteTransform.position = Input.mousePosition;
 
@@ -37,9 +37,7 @@ public class DragAndDrop : MonoBehaviour
     {
         if (itemFile != null && itemFile.ID != ItemID.Empty)
         {
-            dragging = true;
-
-            Debug.Log("DRAGGING START = " + itemFile.ID);
+            IsDragging = true;
 
             startingSlot = uiSlot;
             startingFile = itemFile;
@@ -51,9 +49,9 @@ public class DragAndDrop : MonoBehaviour
 
     public void StopDrag(GameObject endObject)
     {
-        if (!dragging) return;
+        if (!IsDragging || !startingSlot.CanReleaseFile(startingFile)) return;
 
-        dragging = false;
+        IsDragging = false;
         image.enabled = false;
 
         /* Potential outcomes in drag-and-drop:
@@ -119,7 +117,7 @@ public class DragAndDrop : MonoBehaviour
     void OnGUI()
     {
         GUI.Label(new Rect(20, 220, 200, 20), "startFile: " + startingFile);
-        GUI.Label(new Rect(20, 240, 200, 20), "dragging: " + dragging);
+        GUI.Label(new Rect(20, 240, 200, 20), "dragging: " + IsDragging);
         //GUI.Label(new Rect(20, 260, 200, 20), "endFile: "   + endFile);
     }
 }

@@ -70,6 +70,11 @@ public class UIManager : MonoBehaviour
     {
         hud.SetStaminaBar(current / (float)max);
     }
+
+    public void SetMoney(int amount)
+    {
+        hud.SetMoney(amount);
+    }
     #endregion
 
     #region Abilities Hotbar

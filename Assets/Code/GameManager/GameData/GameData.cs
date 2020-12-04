@@ -24,6 +24,12 @@ public class GameData
     public ProfessionTypes profession;
     public RacialTypes race;
 
+    //Resources
+    public int hp;
+    public int mp;
+    public int ap;
+    public int money;
+
     //Attributes
     public PlayerAttribute attributes;
     public PlayerStats stats;
@@ -90,7 +96,12 @@ public class GameData
         ArrayPopulate(bagItems,            BagSlots);
         ArrayPopulate(consumableBarItems,  ConsumableBarSlots);
         ArrayPopulate(equipmentItems,      EquipmentSlots);
-        
+
+        hp = stats.HPMax;
+        mp = stats.MPMax;
+        ap = stats.APMax;
+        money = 100;
+
         hairColor   = Color.red;
         eyeColor    = Color.yellow;
         headColor   = Color.white;

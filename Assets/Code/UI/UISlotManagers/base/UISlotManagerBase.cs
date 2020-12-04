@@ -14,6 +14,7 @@ public abstract class UISlotManagerBase
     protected bool sortOn = false;
     protected bool isOpen;
 
+    public int SlotCount => Slots.Count;
 
     public virtual void Initialize(Inventory inventory)
     {
@@ -79,6 +80,11 @@ public abstract class UISlotManagerBase
         }
 
         this.isOpen = isOpen;
+
+        foreach (var slot in Slots)
+        {
+            slot.IsVisibleOnScreen = isOpen;
+        }
     }
 
     void OnDestroy()

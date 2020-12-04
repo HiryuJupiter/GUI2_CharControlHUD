@@ -7,7 +7,7 @@ public class Inventory_Consumable : Inventory
 {
     void Awake()
     {
-        condition = (item, slotIndex) => item.ItemType == ItemType.Consumable;
+        acceptingCondition = (item, slotIndex) => item.ItemType == ItemType.Consumable;
     }
 
     void Start()
@@ -17,4 +17,9 @@ public class Inventory_Consumable : Inventory
         //Conditional
         UISlotManager_ConsumableBar.Instance.Initialize(this);
     }
+
+    //protected override void ItemSlotted(int slotIndex) { }
+    //protected override void ItemUnslotted(int slotIndex) { }
+    //protected override void ItemSlotted(int slotIndex) => GetItemFromID(itemList[slotIndex].ID).ItemUnslotted();
+
 }

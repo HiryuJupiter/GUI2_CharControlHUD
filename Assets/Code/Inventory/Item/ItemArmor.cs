@@ -9,4 +9,14 @@ public class ItemArmor : Item
         itemType = ItemType.Armor;
     }
 
+    public override void ItemSlotted()
+    {
+
+        PlayerController.Instance.SetArmorVisibility(true);
+    }
+
+    public override void ItemUnslotted()
+    {
+        PlayerController.Instance.SetArmorVisibility(false);
+    }
 }

@@ -4,6 +4,8 @@ using System.Collections;
 //[CreateAssetMenu(fileName = "Item", menuName = "Inventory/Item")]
 public abstract class  Item : MonoBehaviour
 {
+    protected float cooldownDuration;
+
     public ItemID ID;
     public string itemName;
     public string description;
@@ -13,15 +15,36 @@ public abstract class  Item : MonoBehaviour
 
     [HideInInspector] public int stacks = 1;
 
+    //Stats
     protected bool isStackable;
     protected ItemType itemType;
 
+    //Reference
     protected SpriteRenderer spriteRenderer;
     protected TextMesh textMesh;
 
     //Property
     public bool IsStackable => isStackable;
     public ItemType ItemType => itemType;
+    public static float CooldownTimer { get; protected set; }
+    public float CooldownPercent => (cooldownDuration <= 0) ? 0f : CooldownTimer / cooldownDuration;
+    public bool HasCooldown => cooldownDuration > 0.01f;
+    public bool CooldownReady => CooldownTimer <= 0f;
+
+    #region MonoBehavior
+    IEnumerator Start()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GetComponent<Collider>().enabled = true;
+    }
+
+    void Update()
+    {
+        transform.rotation = GlobalRotation.CoinRotation;
+    }
+    #endregion
+
+    #region Public
 
     public virtual bool TryUseItem() => false; //Items cannot be used by default
 
@@ -32,16 +55,25 @@ public abstract class  Item : MonoBehaviour
 
     public GameObject SpawnItem(Vector3 position) => Instantiate(gameObject, position, Quaternion.identity);
 
-    IEnumerator Start ()
-    {
-        yield return new WaitForSeconds(0.5f);
-        GetComponent<Collider>().enabled = true;
-    }
 
-    void Update()
+    //protected override void ItemSlotted(int slotIndex) => GetItemFromID(itemList[slotIndex].ID).ItemUnslotted();
+
+    public virtual void ItemSlotted() { }
+    public virtual void ItemUnslotted() { }
+    #endregion
+
+    #region Private
+    protected IEnumerator StartCDTimer ()
     {
-        transform.rotation = GlobalRotation.CoinRotation;
+        CooldownTimer = cooldownDuration;
+        while (CooldownTimer > 0f)
+        {
+            CooldownTimer -= Time.deltaTime;
+            yield return null;
+        }
     }
+    #endregion
+
 }
 
 //public void SetItem(ItemSaveFile item)

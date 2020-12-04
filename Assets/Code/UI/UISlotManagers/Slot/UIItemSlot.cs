@@ -9,11 +9,14 @@ using UnityEditor;
 
 public class UIItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public bool IsVisibleOnScreen; 
+
     [HideInInspector] public bool isInventorySlot;
 
     [SerializeField] Color highlightColor;
 
     [SerializeField] Image image;
+    [SerializeField] Image cooldownMask;
     [SerializeField] Text countText;
     [SerializeField] GameObject descriptionGameObject;
     [SerializeField] Text descriptionText;
@@ -25,9 +28,24 @@ public class UIItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     Inventory inventory;
     DragAndDrop dragAndDrop;
 
+    //Status
+    Item currentItem;
+    bool hasValidItem;
+    bool itemHasCooldown;
+
     ItemSaveFile ClonedExistingItemFile => new ItemSaveFile(itemFile);
     bool HasFile => itemFile != null && itemFile.ID != ItemID.Empty;
     public ItemSaveFile ItemFile => itemFile;
+
+    #region MonoBehavior
+    void Update ()
+    {
+        if (IsVisibleOnScreen && hasValidItem && itemHasCooldown)
+        {
+            cooldownMask.fillAmount = currentItem.CooldownPercent;
+        }
+    }
+    #endregion
 
     #region Public - item management - control from Inventory
     public void Initialize(Inventory inventory, int slotIndex)
@@ -52,14 +70,23 @@ public class UIItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (newItem != null && newItem.ID != ItemID.Empty)
         {
-            Item item = ItemDirectory.GetItem(newItem.ID);
+            //Status
+            currentItem = ItemDirectory.GetItem(newItem.ID);
+            itemHasCooldown = currentItem.HasCooldown;
+            hasValidItem = true;
+
+            //Description
+            descriptionText.text = currentItem.description;
+            itemNameText.text = currentItem.itemName;
 
             //Set icon
-            image.sprite = item.icon;
-            countText.text = (item.IsStackable && newItem.stacks > 1) ? newItem.stacks.ToString() : string.Empty;
+            image.sprite = currentItem.icon;
+            countText.text = (currentItem.IsStackable && newItem.stacks > 1) ? newItem.stacks.ToString() : string.Empty;
 
             //Set reference
             this.itemFile = newItem;
+
+
         }
         else
         {
@@ -73,9 +100,42 @@ public class UIItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         image.sprite = null;
         countText.text = string.Empty;
         itemFile = null;
+
+        //Status
+        currentItem = null;
+        hasValidItem = false;
+        itemHasCooldown = false;
+
+        //Description
+        descriptionText.text = String.Empty;
+        itemNameText.text = String.Empty;
+
+        cooldownMask.fillAmount = 0f;
     }
 
-    
+    public void UseItem()
+    {
+        if (TryGetItem(out Item item))
+        {
+            if (item != null && item.TryUseItem() && item.CooldownReady)
+            {
+                inventory.ReduceStackableItemInInventory(slotIndex);
+            }
+        }
+    }
+
+    #endregion
+
+    #region Check for timer update
+    public void CheckForCooldownMask ()
+    {
+
+    }
+
+    public void ClearCooldownMask ()
+    {
+
+    }
     #endregion
 
     #region Public - drag and drop - Requires notification
@@ -109,24 +169,24 @@ public class UIItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         image.color = highlightColor;
+
+        if (hasValidItem && !DragAndDrop.IsDragging)
+        {
+            descriptionGameObject.SetActive(true);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         image.color = Color.white;
+        descriptionGameObject.SetActive(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (TryGetItem(out Item item))
-            {
-                if (item != null && item.TryUseItem())
-                {
-                    inventory.ReduceStackableItemInInventory(slotIndex);
-                }
-            }
+            UseItem();
         }
     }
     #endregion
@@ -167,6 +227,7 @@ public class UIItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     //Helper expression bodies
     public bool CanAcceptFile(ItemSaveFile file) => inventory.SlotRequest_CheckIfCanAcceptFile(file, slotIndex);
+    public bool CanReleaseFile(ItemSaveFile file) => inventory.SlotRequest_CheckIfCanReleaseFile(file, slotIndex);
 
     bool IsItemFileEmpty(ItemSaveFile item) => item == null || item.ID == ItemID.Empty;
 

@@ -7,6 +7,8 @@ using System.Linq;
 public class UISlotManager_Equipment : UISlotManagerBase
 {
     public static UISlotManager_Equipment Instance;
+    public Camera equipmentCamera;
+
     StatPageStatsWriter statWriter;
     PlayerController player;
 
@@ -29,6 +31,7 @@ public class UISlotManager_Equipment : UISlotManagerBase
         if (Input.GetKeyDown(KeyCode.C))
         {
             ToggleOpen();
+            equipmentCamera.enabled = isOpen;
             statWriter.InitializeAllInfo(player.data);
         }
     }

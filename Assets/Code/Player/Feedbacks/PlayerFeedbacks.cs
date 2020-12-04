@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+[RequireComponent(typeof(Player3rdPersonCamera))]
+
+[RequireComponent(typeof(PlayerModelPartSwapper))]
 [RequireComponent(typeof(Player3DAnimator))]
 [RequireComponent(typeof(PlayerColorAssigner))]
-[RequireComponent(typeof(Player3rdPersonCamera))]
-[RequireComponent(typeof(PlayerController))]
-
 public class PlayerFeedbacks : MonoBehaviour
 {
     [SerializeField] Transform modelTransform;
@@ -14,6 +15,7 @@ public class PlayerFeedbacks : MonoBehaviour
     //Reference
     Player3rdPersonCamera cameraController;
     PlayerController player;
+    PlayerModelPartSwapper modelParts;
 
     //Status
     bool facingRight;
@@ -28,6 +30,8 @@ public class PlayerFeedbacks : MonoBehaviour
     {
         Animator                = GetComponent<Player3DAnimator>();
         playerColorAssigner     = GetComponent<PlayerColorAssigner>();
+        modelParts              = GetComponent<PlayerModelPartSwapper>();
+
         cameraController        = GetComponent<Player3rdPersonCamera>();
 
         //Cache the scales 
@@ -71,4 +75,15 @@ public class PlayerFeedbacks : MonoBehaviour
     }
     #endregion
 
+    #region Model
+    public void SetWeaponVisibility(bool isVisible)
+    {
+        modelParts.SetWeaponVisibility(isVisible);
+    }
+
+    public void SetArmorVisibility(bool isVisible)
+    {
+        modelParts.SetArmorVisibility(isVisible);
+    }
+    #endregion
 }

@@ -141,6 +141,18 @@ public class PlayerController : MonoBehaviour
         gameData.SaveFile.stats.MP += (int)(attr.Willpower * 0.2f);
         gameData.SaveFile.stats.AP += (int)(attr.Agility * 0.2f);
     }
+
+    public bool TrySpendMoney (int amount)
+    {
+
+        Debug.Log("trying to spend money :" + amount);
+        return resourceManagement.TrySpendMoney(amount);
+    }
+
+    public void AddMoney (int amount)
+    {
+        resourceManagement.AddMoney(amount);
+    }
     #endregion
 
     #region Item
@@ -194,6 +206,19 @@ public class PlayerController : MonoBehaviour
         SwitchToNewState(MotorStates.OnGround);
         FullyRestorePlayer();
     }
+    #endregion
+
+    #region Feedbacks
+    public void SetWeaponVisibility (bool isVisible)
+    {
+        feedback.SetWeaponVisibility(isVisible);
+    }
+
+    public void SetArmorVisibility(bool isVisible)
+    {
+        feedback.SetArmorVisibility(isVisible);
+    }
+
     #endregion
 
     #region Private

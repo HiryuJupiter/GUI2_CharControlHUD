@@ -19,6 +19,8 @@ public class PlayerResourceManagement
 
         ui = UIManager.Instance;
         sfx = SfxManager.instance;
+
+        UpdateUI_Money();
     }
 
     public void PassiveRegen ()
@@ -92,4 +94,24 @@ public class PlayerResourceManagement
     public void UpdateUI_HPBar () => ui.UpdateHealth(stats.HP, stats.HPMax);
     public void UpdateUI_ManaBar() => ui.UpdateMana(stats.MP, stats.MPMax);
     public void UpdateUI_StaminaBar() => ui.UpdateAP(stats.AP, stats.APMax);
+
+    #region Money
+    public bool TrySpendMoney(int amount)
+    {
+        if (player.data.money - amount > 0)
+        {
+            player.data.money -= amount;
+            UpdateUI_Money();
+            return true;
+        }
+        return false;
+    }
+
+    public void AddMoney (int amount)
+    {
+        player.data.money += amount;
+    }
+
+    public void UpdateUI_Money () => ui.SetMoney(player.data.money);
+    #endregion
 }

@@ -32,4 +32,8 @@ public class Inventory_Bag : Inventory
         TryPickUpItem(new ItemSaveFile(ItemID.weapon, 2));
         TryPickUpItem(new ItemSaveFile(ItemID.weapon, 2));
     }
+
+    //protected override void ItemSlotted(int slotIndex) { }
+    //protected override void ItemUnslotted(int slotIndex) { }
+    //protected override void ItemSlotted(int slotIndex) => GetItemFromID(itemList[slotIndex].ID).ItemUnslotted();
 }

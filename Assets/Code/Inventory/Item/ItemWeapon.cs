@@ -8,4 +8,15 @@ public class ItemWeapon : Item
         isStackable = false;
         itemType = ItemType.Weapon;
     }
+
+    public override void ItemSlotted()
+    {
+
+        PlayerController.Instance.SetWeaponVisibility(true);
+    }
+
+    public override void ItemUnslotted()
+    {
+        PlayerController.Instance.SetWeaponVisibility(false);
+    }
 }

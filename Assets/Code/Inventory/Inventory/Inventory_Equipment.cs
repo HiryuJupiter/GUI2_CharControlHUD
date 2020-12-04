@@ -15,7 +15,7 @@ public class Inventory_Equipment : Inventory
     void Awake()
     {
         Instance = this;
-        condition = (item, slotIndex) => (
+        acceptingCondition = (item, slotIndex) => (
             (item.ItemType == ItemType.Weapon && (slotIndex == WeaponL || slotIndex == WeaponR)) ||
             (item.ItemType == ItemType.Armor && (slotIndex == Armor || slotIndex == Legging)));
     }
@@ -27,6 +27,12 @@ public class Inventory_Equipment : Inventory
 
         UISlotManager_Equipment.Instance.Initialize(this);
     }
+
+    protected override void OnItemSlotted(int slotIndex) => GetItemFromID(itemList[slotIndex].ID).ItemSlotted();
+    protected override void OnItemUnslotted(int slotIndex) => GetItemFromID(itemList[slotIndex].ID).ItemUnslotted();
+
+    //    protected override void ItemSlotted(int slotIndex) { }
+    //    protected override void ItemUnslotted(int slotIndex) { }
 }
 
 

@@ -14,7 +14,8 @@ public class Inventory : MonoBehaviour
     protected ItemSaveFile[] itemList;
     protected Item GetItemFromID(ItemID ID) => ItemDirectory.GetItem(ID);
 
-    protected Func<Item, int, bool> condition;
+    protected Func<Item, int, bool> acceptingCondition;
+    protected Func<Item, int, bool> releasingCondition;
 
     public ItemSaveFile[] ItemList => itemList;
 
@@ -34,6 +35,7 @@ public class Inventory : MonoBehaviour
         //If the item is stackable, try stack it
         if (item.IsStackable && TryStackItemInAnyslot(newItemFile))
         {
+
             InvokeEvent_InventoryChange();
             return true;
         }
@@ -45,10 +47,13 @@ public class Inventory : MonoBehaviour
             return true;
         }
         return false;
+
     }
 
     bool TryAddToNextEmptySlot(ItemSaveFile newItem)
     {
+
+        Debug.Log(" a");
         for (int i = 0; i < itemList.Length; i++)
         {
             if (SlotIsEmpty(i))
@@ -58,6 +63,8 @@ public class Inventory : MonoBehaviour
                 return true;
             }
         }
+        Debug.Log(" b");
+
         return false;
     }
 
@@ -66,7 +73,7 @@ public class Inventory : MonoBehaviour
         //See if the item already exists in the inventory
         foreach (var i in itemList)
         {
-            if (i!= null && i.ID == newItem.ID)
+            if (i != null && i.ID == newItem.ID)
             {
                 i.stacks += newItem.stacks;
                 return true;
@@ -77,17 +84,29 @@ public class Inventory : MonoBehaviour
     #endregion
 
     #region Inputs from slots (Drag and drop event)
+    //shop only
+    public bool SlotRequest_CheckIfCanReleaseFile(ItemSaveFile file, int slotIndex)
+    {
+        if (file != null && file.ID != ItemID.Empty)
+        {
+            Item item = GetItemFromID(file.ID);
+            return (releasingCondition == null || releasingCondition(item, slotIndex)) ? true : false;
+        }
+        return false;
+    }
+
     public bool SlotRequest_CheckIfCanAcceptFile(ItemSaveFile file, int slotIndex)
     {
         if (file != null && file.ID != ItemID.Empty)
         {
             Item item = GetItemFromID(file.ID);
-            return (condition == null || condition(item, slotIndex)) ? true : false;
+            return (acceptingCondition == null || acceptingCondition(item, slotIndex)) ? true : false;
         }
         return false;
     }
 
-    public bool SlotRequest_TryStackItem (ItemSaveFile newFile, int slotIndex)
+
+    public bool SlotRequest_TryStackItem(ItemSaveFile newFile, int slotIndex)
     {
         if (itemList[slotIndex].ID == newFile.ID && ItemDirectory.GetItem(newFile.ID).IsStackable)
         {
@@ -107,6 +126,7 @@ public class Inventory : MonoBehaviour
         if (SlotIsEmpty(slotIndex))
         {
             SetItemFileAt(newFile, slotIndex);
+            OnItemSlotted(slotIndex);
             InvokeEvent_SlotChange(slotIndex);
         }
         else //If not empty, try stacking
@@ -119,13 +139,16 @@ public class Inventory : MonoBehaviour
             else //If not stackable then OVERRIDE IT
             {
                 SetItemFileAt(newFile, slotIndex);
+                OnItemSlotted(slotIndex);
                 InvokeEvent_SlotChange(slotIndex);
             }
         }
     }
 
-    public void SlotRequest_ClearSlot (int slotIndex)
+    public void SlotRequest_ClearSlot(int slotIndex)
     {
+        OnItemUnslotted(slotIndex);
+
         itemList[slotIndex] = null;
         InvokeEvent_SlotChange(slotIndex);
     }
@@ -192,16 +215,8 @@ public class Inventory : MonoBehaviour
     public void ClearSlotWithoutNotify(int slot) => itemList[slot] = new ItemSaveFile(ItemID.Empty, 1);
     #endregion
 
-    #region Private Helper methods
-    //These helper methods do not need to call InvokeEvent_InventoryChange();
-
-
-    void ForceAddVerifiedFileInSlot(ItemSaveFile newItemFile, int slotIndex)
-    {
-        
-    }
-    #endregion
-
+    protected virtual void OnItemSlotted(int slotIndex) { }
+    protected virtual void OnItemUnslotted(int slotIndex) { }
     protected void InvokeEvent_InventoryChange() => OnItemListChanged?.Invoke();
     protected void InvokeEvent_SlotChange(int slotIndex) => OnSlotChanged?.Invoke(slotIndex);
     protected bool SlotIsEmpty(int slot) => itemList[slot] == null || itemList[slot].ID == ItemID.Empty;
