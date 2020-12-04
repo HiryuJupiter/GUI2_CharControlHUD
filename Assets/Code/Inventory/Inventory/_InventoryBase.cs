@@ -52,8 +52,6 @@ public class Inventory : MonoBehaviour
 
     bool TryAddToNextEmptySlot(ItemSaveFile newItem)
     {
-
-        Debug.Log(" a");
         for (int i = 0; i < itemList.Length; i++)
         {
             if (SlotIsEmpty(i))
@@ -63,7 +61,6 @@ public class Inventory : MonoBehaviour
                 return true;
             }
         }
-        Debug.Log(" b");
 
         return false;
     }

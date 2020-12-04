@@ -20,15 +20,13 @@ public class Inventory_Chest : Inventory
     {
         itemList = new ItemSaveFile[slotManager.SlotCount];
 
-        Debug.Log(" chest slot count" + slotManager.SlotCount);
         slotManager.Initialize(this);
 
 
-        Debug.Log("try adding potion :" + TryPickUpItem(new ItemSaveFile(ItemID.potion, 3)));
         TryPickUpItem(new ItemSaveFile(ItemID.potion, 3));
-        //TryPickUpItem(new ItemSaveFile(ItemID.weapon, 1));
-        //TryPickUpItem(new ItemSaveFile(ItemID.armor, 2));
-        //TryPickUpItem(new ItemSaveFile(ItemID.potion, 3));
+        TryPickUpItem(new ItemSaveFile(ItemID.weapon, 1));
+        TryPickUpItem(new ItemSaveFile(ItemID.armor, 2));
+        TryPickUpItem(new ItemSaveFile(ItemID.potion, 3));
     }
     
     void OnTriggerEnter(Collider other)

@@ -9,6 +9,7 @@ public class Inventory_Shop : Inventory
     [SerializeField] UISlotManagerBase slotManager;
     [SerializeField] GameObject UICanvas;
     LayerMask playerBodyLayer;
+    float discountModifier = 1f;
 
     bool startedSelling;
 
@@ -18,7 +19,7 @@ public class Inventory_Shop : Inventory
     {
         playerBodyLayer = CharacterSettings.instance.PlayerBodyLayer;
 
-        releasingCondition = (item, slotIndex) => player.TrySpendMoney((int)(item.price * 1.5f));
+        releasingCondition = (item, slotIndex) => player.TrySpendMoney((int)(item.price * 1.5f * discountModifier));
     }
 
     void Start()
@@ -30,13 +31,10 @@ public class Inventory_Shop : Inventory
         itemList = new ItemSaveFile[slotManager.SlotCount];
         slotManager.Initialize(this);
 
-
-        Debug.Log("Inventory_Shop start" );
         TryPickUpItem(new ItemSaveFile(ItemID.potion, 3));
-        //TryPickUpItem(new ItemSaveFile(ItemID.potion, 3));
-        //TryPickUpItem(new ItemSaveFile(ItemID.potion, 3));
-        //TryPickUpItem(new ItemSaveFile(ItemID.weapon, 1));
-        
+        TryPickUpItem(new ItemSaveFile(ItemID.potion, 3));
+        TryPickUpItem(new ItemSaveFile(ItemID.potion, 3));
+        TryPickUpItem(new ItemSaveFile(ItemID.weapon, 1));
 
         startedSelling = true;
     }
@@ -45,7 +43,6 @@ public class Inventory_Shop : Inventory
     {
         if (startedSelling)
         {
-
             Debug.Log("OnItemSlotted ");
             player.AddMoney((int) (ItemDirectory.GetItem(itemList[slotIndex].ID).price * 0.5f));
         }

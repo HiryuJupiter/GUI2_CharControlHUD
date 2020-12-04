@@ -19,6 +19,7 @@ public abstract class UISlotManagerBase
     public virtual void Initialize(Inventory inventory)
     {
         this.inventory = inventory;
+
         inventory.OnItemListChanged += RefreshInventoryDisplay;
         inventory.OnSlotChanged += RefreshSlotDisplay;
 
@@ -45,7 +46,7 @@ public abstract class UISlotManagerBase
         {
             inventory.ReorderingInventory(sortingMap);
         }
-            
+
         //Go through all slots and set them accordingly
         for (int i = 0; i < Slots.Count; i++)
         {
@@ -69,6 +70,7 @@ public abstract class UISlotManagerBase
 
     public virtual void SetIsOpen(bool isOpen)
     {
+        this.isOpen = isOpen;
         if (isOpen)
         {
             CanvasGroupUtil.InstantReveal(canvasGroup);
@@ -78,8 +80,6 @@ public abstract class UISlotManagerBase
         {
             CanvasGroupUtil.InstantHide(canvasGroup);
         }
-
-        this.isOpen = isOpen;
 
         foreach (var slot in Slots)
         {

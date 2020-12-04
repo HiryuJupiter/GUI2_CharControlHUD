@@ -145,7 +145,6 @@ public class PlayerController : MonoBehaviour
     public bool TrySpendMoney (int amount)
     {
 
-        Debug.Log("trying to spend money :" + amount);
         return resourceManagement.TrySpendMoney(amount);
     }
 

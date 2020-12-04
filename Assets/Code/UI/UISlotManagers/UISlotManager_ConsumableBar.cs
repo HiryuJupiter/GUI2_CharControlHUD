@@ -10,8 +10,12 @@ public class UISlotManager_ConsumableBar : UISlotManagerBase
 
     void Awake()
     {
-        SetIsOpen(true);
         Instance = this;
+    }
+
+    void Start()
+    {
+        SetIsOpen(true);
     }
 
     void Update()

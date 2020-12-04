@@ -100,7 +100,7 @@ public class GameData
         hp = stats.HPMax;
         mp = stats.MPMax;
         ap = stats.APMax;
-        money = 100;
+        money = 5000;
 
         hairColor   = Color.red;
         eyeColor    = Color.yellow;
