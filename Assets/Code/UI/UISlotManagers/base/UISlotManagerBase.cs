@@ -63,7 +63,7 @@ public abstract class UISlotManagerBase
         }
     }
 
-    public void ToggleOpen()
+    public virtual void ToggleOpen()
     {
         SetIsOpen(isOpen = !isOpen);
     }

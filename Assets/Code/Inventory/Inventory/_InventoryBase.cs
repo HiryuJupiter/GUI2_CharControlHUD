@@ -161,8 +161,6 @@ public class Inventory : MonoBehaviour
 
             if (i.IsStackable && itemList[slot].stacks > 2)
             {
-
-                Debug.Log(" ReduceStackableItemInInventory] - " + itemList[slot].stacks);
                 itemList[slot].stacks--;
             }
             else

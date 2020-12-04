@@ -124,4 +124,93 @@ public class CharacterCreator : MonoBehaviour
         }
     }
     #endregion
+
+    void OnGUI()
+    {
+        return;
+        if (GUI.Button(new Rect(20, 300, 100, 20), "<"))
+        {
+            ModifyHairColor(false);
+        }
+        if (GUI.Button(new Rect(20, 370, 100, 20), "<"))
+        {
+            ModifyEyeColor(false);
+        }
+        if (GUI.Button(new Rect(20, 440, 100, 20), "<"))
+        {
+            ModifyHeadColor(false);
+        }
+        if (GUI.Button(new Rect(20, 510, 100, 20), "<"))
+        {
+            ModifyBodyColor(false);
+        }
+
+        if (GUI.Button(new Rect(400, 300, 100, 20), ">"))
+        {
+            ModifyHairColor(true);
+        }
+        if (GUI.Button(new Rect(400, 370, 100, 20), ">"))
+        {
+            ModifyEyeColor(true);
+        }
+        if (GUI.Button(new Rect(400, 440, 100, 20), ">"))
+        {
+            ModifyHeadColor(true);
+        }
+        if (GUI.Button(new Rect(400, 510, 100, 20), ">"))
+        {
+            ModifyBodyColor(true);
+        }
+
+
+        if (GUI.Button(new Rect(1550, 420, 100, 20), "-"))
+        {
+            ModifyStrength(false);
+        }
+        if (GUI.Button(new Rect(1550, 520, 100, 20), "-"))
+        {
+            ModifyIntelligence(false);
+        }
+        if (GUI.Button(new Rect(1550, 620, 100, 20), "-"))
+        {
+            ModifyAgility(false);
+        }
+        if (GUI.Button(new Rect(1550, 720, 100, 20), "-"))
+        {
+            ModifyEndurance(false);
+        }
+        if (GUI.Button(new Rect(1550, 820, 100, 20), "-"))
+        {
+            ModifyWillpower(false);
+        }
+        if (GUI.Button(new Rect(1550, 920, 100, 20), "-"))
+        {
+            ModifyLuck(false);
+        }
+
+        if (GUI.Button(new Rect(1800, 420, 100, 20), "+"))
+        {
+            ModifyStrength(true);
+        }
+        if (GUI.Button(new Rect(1800, 520, 100, 20), "+"))
+        {
+            ModifyIntelligence(true);
+        }
+        if (GUI.Button(new Rect(1800, 620, 100, 20), "+"))
+        {
+            ModifyAgility(true);
+        }
+        if (GUI.Button(new Rect(1800, 720, 100, 20), "+"))
+        {
+            ModifyEndurance(true);
+        }
+        if (GUI.Button(new Rect(1800, 820, 100, 20), "+"))
+        {
+            ModifyWillpower(true);
+        }
+        if (GUI.Button(new Rect(1800, 920, 100, 20), "+"))
+        {
+            ModifyLuck(true);
+        }
+    }
 }

@@ -31,11 +31,17 @@ public class UISlotManager_Equipment : UISlotManagerBase
         if (Input.GetKeyDown(KeyCode.C))
         {
             ToggleOpen();
-            equipmentCamera.enabled = isOpen;
-            statWriter.InitializeAllInfo(player.data);
         }
     }
     #endregion
+
+    public override void ToggleOpen()
+    {
+        SetIsOpen(isOpen = !isOpen);
+        equipmentCamera.enabled = isOpen;
+        statWriter.InitializeAllInfo(player.data);
+
+    }
 
     //#region Outputs only, from Inventory -> UI
     //protected override void RefreshInventoryDisplay()

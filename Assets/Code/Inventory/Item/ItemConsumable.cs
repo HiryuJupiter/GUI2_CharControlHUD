@@ -18,6 +18,7 @@ public class ItemConsumable : Item
             CooldownTimer = cooldownDuration;
             SceneManager.Instance.StartCoroutine(StartCDTimer());
 
+
             PlayerController.Instance.HealPlayer(20);
             return true;
         }

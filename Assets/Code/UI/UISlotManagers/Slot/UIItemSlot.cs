@@ -117,7 +117,7 @@ public class UIItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (TryGetItem(out Item item))
         {
-            if (item != null && item.TryUseItem() && item.CooldownReady)
+            if (item != null && item.CooldownReady && item.TryUseItem())
             {
                 inventory.ReduceStackableItemInInventory(slotIndex);
             }
