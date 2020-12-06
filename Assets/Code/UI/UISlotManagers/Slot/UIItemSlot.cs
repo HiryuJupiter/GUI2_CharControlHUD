@@ -62,7 +62,10 @@ public class UIItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         catch (Exception e)
         {
-            Debug.LogError("Inventory name: " + inventory + "; Inventory.ItemList " + inventory.ItemList.Length + "; SlotIndex: " + slotIndex);
+            Debug.Log("Inventory name: " + inventory);
+            Debug.Log("; Inventory.ItemList " + inventory.ItemList);
+            Debug.Log("; Inventory.ItemList " + inventory.ItemList.Length);
+            Debug.Log("; SlotIndex: " + slotIndex);
         }
     }
 

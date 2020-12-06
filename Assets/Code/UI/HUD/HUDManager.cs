@@ -20,6 +20,9 @@ public class HUDManager : MonoBehaviour
     [Header("Color gradient")]
     [SerializeField] Gradient gradient;
 
+    [Header("Quest")]
+    [SerializeField] Text ActiveQuest;
+
     OnHurtHUDBorder hurtBorder;
 
     void Awake()
@@ -38,6 +41,16 @@ public class HUDManager : MonoBehaviour
     public void SetStaminaBar(float percentage) => staminaBar.fillAmount = Mathf.Clamp01(percentage);
 
     #endregion
+
+    public void SetActiveQuest (Quest quest)
+    {
+        ActiveQuest.text = quest.Description;
+    }
+
+    public void ClearActiveQuest (Quest quest)
+    {
+        ActiveQuest.text = "";
+    }
 
     public void SetMoney (int amount )
     {

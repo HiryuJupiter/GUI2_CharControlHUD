@@ -6,6 +6,8 @@ using System.Linq;
 
 public class Inventory : MonoBehaviour
 {
+    public const int NPCShopSlots = 4;
+
     public delegate void OnItemChangedHandler();
     public event OnItemChangedHandler OnItemListChanged;
     public delegate void OnSlotChangedHandler(int slotIndex);
@@ -30,24 +32,26 @@ public class Inventory : MonoBehaviour
     public virtual bool TryPickUpItem(Item newItem) => TryPickUpItem(new ItemSaveFile(newItem.ID, newItem.stacks));
     public virtual bool TryPickUpItem(ItemSaveFile newItemFile)
     {
-        Item item = GetItemFromID(newItemFile.ID);
-
-        //If the item is stackable, try stack it
-        if (item.IsStackable && TryStackItemInAnyslot(newItemFile))
+        if (newItemFile != null && newItemFile.ID != ItemID.Empty)
         {
+            Item item = GetItemFromID(newItemFile.ID);
 
-            InvokeEvent_InventoryChange();
-            return true;
-        }
+            //If the item is stackable, try stack it
+            if (item.IsStackable && TryStackItemInAnyslot(newItemFile))
+            {
+                InvokeEvent_InventoryChange();
+                return true;
+            }
 
-        //Add to next empty slot
-        if (TryAddToNextEmptySlot(newItemFile))
-        {
-            InvokeEvent_InventoryChange();
-            return true;
+            //Add to next empty slot
+            if (TryAddToNextEmptySlot(newItemFile))
+            {
+                InvokeEvent_InventoryChange();
+                return true;
+            }
         }
+        
         return false;
-
     }
 
     bool TryAddToNextEmptySlot(ItemSaveFile newItem)

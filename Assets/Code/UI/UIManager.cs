@@ -76,6 +76,18 @@ public class UIManager : MonoBehaviour
         hud.SetMoney(amount);
     }
     #endregion
+    #region Quest
+
+    public void SetActiveQuest(Quest quest)
+    {
+        hud.SetActiveQuest(quest);
+    }
+
+    public void ClearActiveQuest(Quest quest)
+    {
+        hud.ClearActiveQuest(quest);
+    }
+    #endregion
 
     #region Abilities Hotbar
     public void SetHotbarOnCoolDown (int slotIndex, float duration)

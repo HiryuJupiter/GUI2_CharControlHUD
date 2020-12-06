@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UISlotManager_Chest : UISlotManagerBase
+public class QuestManager : MonoBehaviour
 {
     void Start()
     {
-        SetIsOpen(false);
+
+    }
+
+    void Update()
+    {
+
     }
 }

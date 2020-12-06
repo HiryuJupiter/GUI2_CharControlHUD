@@ -45,6 +45,9 @@ public class GameData
     public ItemSaveFile[] consumableBarItems;
     public ItemSaveFile[] equipmentItems;
 
+    //Quest
+    public Quest activeQuest;
+
     int CurrentSceneIndex => UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
     
     #region Public - IO
@@ -116,4 +119,5 @@ public class GameData
             array[i] = new ItemSaveFile();
         }
     }
+
 }

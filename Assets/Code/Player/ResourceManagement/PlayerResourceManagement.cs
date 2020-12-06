@@ -98,8 +98,7 @@ public class PlayerResourceManagement
     #region Money
     public bool TrySpendMoney(int amount)
     {
-
-        Debug.Log("TrySpendMoney :" + amount);
+        //Debug.Log("TrySpendMoney :" + amount);
         if (player.data.money - amount > 0)
         {
             player.data.money -= amount;

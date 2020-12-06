@@ -5,17 +5,33 @@ using UnityEngine;
 public class HealZone : MonoBehaviour
 {
     LayerMask playerBodyLayer;
+    PlayerController player;
 
     protected void Awake()
     {
         playerBodyLayer = CharacterSettings.instance.PlayerBodyLayer;
     }
 
+     void Start()
+    {
+        //Reference
+        player = PlayerController.Instance;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (playerBodyLayer == (playerBodyLayer | 1 << other.gameObject.layer))
         {
-            other.GetComponent<PlayerController>().HealPlayer(999);
+            player.HealPlayer(999);
         }
     }
+
+    //void OnTriggerExit(Collider other)
+    //{
+    //    if (playerBodyLayer == (playerBodyLayer | 1 << other.gameObject.layer))
+    //    {
+    //        UICanvas.SetActive(false);
+    //        slotManager.SetIsOpen(false);
+    //    }
+    //}
 }

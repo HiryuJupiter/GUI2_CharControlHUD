@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     PlayerAbilityDirectory directory;
     UIManager ui;
 
-    Inventory_Bag inventory;
+    
 
     //States
     MotorStates currentStateType;
@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public MotorRaycaster Raycaster { get; set; }
     public PlayerFeedbacks feedback { get; set; }
     public Rigidbody Rb { get; set; }
+    public Inventory_Bag Inventory { get; set; }
 
     #region MonoBehiavor
     void Awake()
@@ -66,7 +67,7 @@ public class PlayerController : MonoBehaviour
         gameData = PersistentGameData.Instance;
         ui = UIManager.Instance;
         directory = PlayerAbilityDirectory.Instance;
-        inventory = Inventory_Bag.Instance;
+        Inventory = Inventory_Bag.Instance;
 
         //Reference game data and use it to initialize the game
         data = gameData.SaveFile;
@@ -109,7 +110,7 @@ public class PlayerController : MonoBehaviour
             Item item = col.GetComponent<Item>();
             if (item != null)
             {
-                if (inventory.TryPickUpItem(item))
+                if (Inventory.TryPickUpItem(item))
                 {
                     Destroy(col.gameObject);
                 }
@@ -204,6 +205,20 @@ public class PlayerController : MonoBehaviour
         ui.PlayerRespawned();
         SwitchToNewState(MotorStates.OnGround);
         FullyRestorePlayer();
+    }
+    #endregion
+
+    #region Quest
+    public void TakeQuest (Quest quest)
+    {
+        data.activeQuest = quest;
+        ui.SetActiveQuest(quest);
+    }
+
+    public void CompletedQuest(Quest quest)
+    {
+        data.activeQuest = null;
+        ui.ClearActiveQuest(quest);
     }
     #endregion
 

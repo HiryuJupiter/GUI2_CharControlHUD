@@ -43,6 +43,8 @@ public class UISlotManager_Equipment : UISlotManagerBase
 
     }
 
+
+
     //#region Outputs only, from Inventory -> UI
     //protected override void RefreshInventoryDisplay()
     //{

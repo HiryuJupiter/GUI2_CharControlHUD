@@ -3,16 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public abstract class UISlotManagerBase
-    : MonoBehaviour
+public abstract class UISlotManagerBase: CanvasPageToggle
 {
-    [SerializeField] protected CanvasGroup canvasGroup;
     [SerializeField] protected List<UIItemSlot> Slots = new List<UIItemSlot>();
     protected Inventory inventory;
 
     protected int[] sortingMap;
     protected bool sortOn = false;
-    protected bool isOpen;
 
     public int SlotCount => Slots.Count;
 
@@ -32,7 +29,7 @@ public abstract class UISlotManagerBase
         RefreshInventoryDisplay();
     }
 
-    protected virtual void RefreshSlotDisplay (int slotIndex)
+    protected virtual void RefreshSlotDisplay(int slotIndex)
     {
         Slots[slotIndex].SetSlotWithoutNotifyingInventory(inventory.ItemList[slotIndex]);
     }
@@ -46,6 +43,7 @@ public abstract class UISlotManagerBase
         {
             inventory.ReorderingInventory(sortingMap);
         }
+        
 
         //Go through all slots and set them accordingly
         for (int i = 0; i < Slots.Count; i++)
@@ -63,12 +61,7 @@ public abstract class UISlotManagerBase
         }
     }
 
-    public virtual void ToggleOpen()
-    {
-        SetIsOpen(isOpen = !isOpen);
-    }
-
-    public virtual void SetIsOpen(bool isOpen)
+    public override void SetIsOpen(bool isOpen)
     {
         this.isOpen = isOpen;
         if (isOpen)
@@ -86,11 +79,10 @@ public abstract class UISlotManagerBase
             slot.IsVisibleOnScreen = isOpen;
         }
     }
-
     void OnDestroy()
     {
-        inventory.OnItemListChanged -= RefreshInventoryDisplay;
-        inventory.OnSlotChanged -= RefreshSlotDisplay;
+        //inventory.OnItemListChanged -= RefreshInventoryDisplay;
+        //inventory.OnSlotChanged -= RefreshSlotDisplay;
     }
 }
 

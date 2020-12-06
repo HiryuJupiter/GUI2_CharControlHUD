@@ -33,6 +33,8 @@ public class Inventory_Equipment : Inventory
 
     //    protected override void ItemSlotted(int slotIndex) { }
     //    protected override void ItemUnslotted(int slotIndex) { }
+
+
 }
 
 
