@@ -2,10 +2,13 @@
 using System.Collections;
 
 
+
+//Encapsulates the approval rating of an NPC
 public class Approval : MonoBehaviour
 {
     public ApprovalLevels level = ApprovalLevels.Neutral;
 
+    //Method overloads so that we can modify the rating using both a bool and using an enum
     public void ApplyInfluence (bool isPositive)
     {
         if (isPositive)
@@ -30,6 +33,7 @@ public class Approval : MonoBehaviour
         }
     }
 
+    //Decrease and increase the levels accordingly
     void Decrease ()
     {
         level = level == ApprovalLevels.Dislike ? ApprovalLevels.Neutral : ApprovalLevels.Like;

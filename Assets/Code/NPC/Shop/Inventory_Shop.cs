@@ -31,6 +31,7 @@ public class Inventory_Shop : Inventory
         player = PlayerController.Instance;
     }
 
+    //Instead of initializing the shop in Awake, the shop inventoyr can be reinitialized endless times by endless NPCs
     public void NPCRequestOpenShop (NPC npc)
     {
         startedSelling = false;

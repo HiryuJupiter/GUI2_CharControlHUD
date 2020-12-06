@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//A small class that encapsulates the string response of choices
 public class ApprovalResponse
 {
     public string response_dislike = "I hate you";
@@ -18,5 +19,4 @@ public class ApprovalResponse
                 
         }
     }
-
 }

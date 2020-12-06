@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Selects a random greeting, based on the NPC's approval rate, to keep things more interesting
 public static class Greetings 
 {
     static string[] positive = new string[]

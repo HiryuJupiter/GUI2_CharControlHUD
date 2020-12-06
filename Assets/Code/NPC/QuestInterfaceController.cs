@@ -24,6 +24,7 @@ public class QuestInterfaceController : CanvasPageToggle
         player = PlayerController.Instance;
     }
 
+    //NPC tells this script, the QuestInterfaceController, to reveal the quest page by the NPC
     public void Initialize(NPC npc)
     {
         this.npc = npc;
@@ -45,7 +46,7 @@ public class QuestInterfaceController : CanvasPageToggle
         }
 
         //Display and hide buttons based on status
-        UpdateButtons();
+        OnlyRevealNecessaryButtons();
     }
 
     public void AcceptQuest()
@@ -53,7 +54,7 @@ public class QuestInterfaceController : CanvasPageToggle
         if (npc != null && player.data.level >= npc.Quest.LevelRequirement)
         {
             npc.Quest.AcceptQuest();
-            UpdateButtons();
+            OnlyRevealNecessaryButtons();
         }
     }
 
@@ -63,7 +64,7 @@ public class QuestInterfaceController : CanvasPageToggle
         {
             npc.Quest.HandInItems();
         }
-        UpdateButtons();
+        OnlyRevealNecessaryButtons();
     }
 
     public void CollectedRewards()
@@ -76,8 +77,9 @@ public class QuestInterfaceController : CanvasPageToggle
             rewardImages[i].enabled = false;
         }
 
-        UpdateButtons();
+        OnlyRevealNecessaryButtons();
 
+        //Go through the rewards, and give the player the reward if they have inventory space, otherwise drop the reward on the ground
         foreach (var itemID in npc.Quest.ItemRewards)
         {
             if (!player.Inventory.TryPickUpItem(ItemDirectory.GetItem(itemID)))
@@ -87,7 +89,7 @@ public class QuestInterfaceController : CanvasPageToggle
         }
     }
 
-    void UpdateButtons()
+    void OnlyRevealNecessaryButtons()
     {
         if (npc == null) return;
 

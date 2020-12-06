@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+
+//Each NPC have 1 NPCDialogue component
+//Each NPCDialogue component has 3  branches of dialogues, based on the 3 types of approval rating
+//Each brnch has 2 responses, one of positive and one of negative, which will affect the rating
 [System.Serializable]
 public class NPCDialogue
 {

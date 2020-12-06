@@ -3,6 +3,17 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
+
+/*
+ The NPC's interaction is made up of several UI panels: 
+1. The greetings page
+2. The dialogue page
+3. The quest page
+4. The shop page
+Each page is operated by a seperate class
+ */
+
+
 public class NPC : MonoBehaviour
 {
     static NPC NpcInPlayerFocus;
@@ -46,6 +57,7 @@ public class NPC : MonoBehaviour
     #region MonoBehavior
     protected void Awake()
     {
+        //Initialize
         approval = new Approval();
 
         playerBodyLayer = CharacterSettings.instance.PlayerBodyLayer;
@@ -75,6 +87,7 @@ public class NPC : MonoBehaviour
     #region Conversation interface transitions
     public void GoToConversationStage(ConversationStages newStage)
     {
+        //Based on the conversation stage, turn off and on corresponding pages
         if (newStage != conversationStage)
         {
             conversationStage = newStage;
@@ -125,6 +138,8 @@ public class NPC : MonoBehaviour
 
     public void EndConversation()
     {
+        //When the conversation ends, we want to turn back on the "Press enter to interact" prompt
+        //so that the player can keep talk to the NPC
         InConversation = false;
         GoToConversationStage(ConversationStages.Closed);
         if (NpcInPlayerFocus == this)
@@ -136,6 +151,7 @@ public class NPC : MonoBehaviour
     #endregion
 
     #region Conversation Initiation
+    //When player enteres the NPC's proximity, start testing for engage input.
     void OnTriggerEnter(Collider other)
     {
         if (IsColliderPlayer(other))
@@ -152,6 +168,7 @@ public class NPC : MonoBehaviour
         }
     }
 
+    //We use a coroutine to check for starting conversation as there could me many NPCs and this operation can slow things down.
     IEnumerator WaitForConversationInitiation()
     {
         while (NpcInPlayerFocus == this && !InConversation)

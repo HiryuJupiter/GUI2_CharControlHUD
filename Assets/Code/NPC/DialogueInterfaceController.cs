@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
+//This class controls the dialgue panel
 public class DialogueInterfaceController : CanvasPageToggle
 {
     public static DialogueInterfaceController Instance { get; private set; }
