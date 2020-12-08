@@ -3,23 +3,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Inventory_Consumable : Inventory
+
+namespace MyNameSpace
 {
-    void Awake()
+    public class Inventory_Consumable : Inventory
     {
-        acceptingCondition = (item, slotIndex) => item.ItemType == ItemType.Consumable;
+        void Awake()
+        {
+            acceptingCondition = (item, slotIndex) => item.ItemType == ItemType.Consumable;
+        }
+
+        void Start()
+        {
+            //Load data from game data
+            itemList = PersistentGameData.Instance.SaveFile.consumableBarItems;
+            //Conditional
+            UISlotManager_ConsumableBar.Instance.Initialize(this);
+        }
+
+        //protected override void ItemSlotted(int slotIndex) { }
+        //protected override void ItemUnslotted(int slotIndex) { }
+        //protected override void ItemSlotted(int slotIndex) => GetItemFromID(itemList[slotIndex].ID).ItemUnslotted();
+
     }
-
-    void Start()
-    {
-        //Load data from game data
-        itemList = PersistentGameData.Instance.SaveFile.consumableBarItems;
-        //Conditional
-        UISlotManager_ConsumableBar.Instance.Initialize(this);
-    }
-
-    //protected override void ItemSlotted(int slotIndex) { }
-    //protected override void ItemUnslotted(int slotIndex) { }
-    //protected override void ItemSlotted(int slotIndex) => GetItemFromID(itemList[slotIndex].ID).ItemUnslotted();
-
 }

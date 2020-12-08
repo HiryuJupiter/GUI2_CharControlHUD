@@ -2,19 +2,22 @@
 using System.Collections;
 
 
-public abstract class GameState : MonoBehaviour
+namespace MyNameSpace
 {
-    [SerializeField] GameStateTypes stateType;
+    public abstract class GameState : MonoBehaviour
+    {
+        [SerializeField] GameStateTypes stateType;
 
-    protected SceneManager gm;
+        protected SceneManager gm;
 
-    public GameStateTypes StateType => stateType;
+        public GameStateTypes StateType => stateType;
 
 
-    public virtual void OnStateEnter() { }
-    public abstract void Tick();
-    public virtual void OnStateExit() { }
+        public virtual void OnStateEnter() { }
+        public abstract void Tick();
+        public virtual void OnStateExit() { }
 
-    public abstract void SetPause(bool value);
+        public abstract void SetPause(bool value);
 
+    }
 }

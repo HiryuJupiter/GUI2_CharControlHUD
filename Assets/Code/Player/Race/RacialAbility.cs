@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Assets.Code.Player.Race
+namespace MyNameSpace
 {
     public class RacialAbility : MonoBehaviour
     {

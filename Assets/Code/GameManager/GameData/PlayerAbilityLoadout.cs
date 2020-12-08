@@ -1,32 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
-public class PlayerAbilityLoadout
+
+namespace MyNameSpace
 {
-    public AbilityTypes[] abilities = new AbilityTypes[3];
-
-    public PlayerAbilityLoadout(RacialTypes race)
+    [System.Serializable]
+    public class PlayerAbilityLoadout
     {
-        abilities[0] = AbilityTypes.Slash;
-        abilities[1] = AbilityTypes.Whirl;
+        public AbilityTypes[] abilities = new AbilityTypes[3];
 
-        SetRace(race);
-    }
-
-    public void SetRace (RacialTypes race)
-    {
-        switch (race)
+        public PlayerAbilityLoadout(RacialTypes race)
         {
-            case RacialTypes.FireBirds:
-                abilities[2] = AbilityTypes.FireLob;
+            abilities[0] = AbilityTypes.Slash;
+            abilities[1] = AbilityTypes.Whirl;
 
-                break;
-            case RacialTypes.IceFrogs:
-                abilities[2] = AbilityTypes.IcyBlast;
-                break;
+            SetRace(race);
         }
-    }
 
-    //Set profession
+        public void SetRace(RacialTypes race)
+        {
+            switch (race)
+            {
+                case RacialTypes.FireBirds:
+                    abilities[2] = AbilityTypes.FireLob;
+
+                    break;
+                case RacialTypes.IceFrogs:
+                    abilities[2] = AbilityTypes.IcyBlast;
+                    break;
+            }
+        }
+
+        //Set profession
+    }
 }

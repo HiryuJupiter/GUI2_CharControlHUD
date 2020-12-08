@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public static class HighScore
+
+namespace MyNameSpace
 {
-    const string Key_HighScore = "HighScore";
-
-    public static void SaveHighscore (int score)
+    public static class HighScore
     {
-        //Save to playerpref
-        PlayerPrefs.SetInt(Key_HighScore, score);
-    }
+        const string Key_HighScore = "HighScore";
 
-    public static int LoadHighScore ()
-    {
-        //Load from player pref
-        return PlayerPrefs.GetInt(Key_HighScore, 0);
+        public static void SaveHighscore(int score)
+        {
+            //Save to playerpref
+            PlayerPrefs.SetInt(Key_HighScore, score);
+        }
+
+        public static int LoadHighScore()
+        {
+            //Load from player pref
+            return PlayerPrefs.GetInt(Key_HighScore, 0);
+        }
     }
 }

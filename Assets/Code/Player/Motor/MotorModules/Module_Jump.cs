@@ -7,123 +7,127 @@ using UnityEngine.UIElements;
  */
 
 
-public class Module_Jump : ModuleBase
+namespace MyNameSpace
 {
-    const float MaxJumpQueueDuration = 0.05f;
-
-    public Module_Jump(PlayerController motor, PlayerFeedbacks feedback) : base(motor, feedback)
-    { }
-
-    #region Public 
-    public override void ModuleEntry()
+    public class Module_Jump : ModuleBase
     {
-        base.ModuleEntry();
-        if (status.jumpQueueTimer > 0f)
-        {
-            OnJumpBtnDown();
-        }
-    }
+        const float MaxJumpQueueDuration = 0.05f;
 
-    public override void TickUpdate()
-    {
-        TickTimers();
+        public Module_Jump(PlayerController motor, PlayerFeedbacks feedback) : base(motor, feedback)
+        { }
 
-        if (GameInput.JumpBtnDown) // && !isJumping for onGround
+        #region Public 
+        public override void ModuleEntry()
         {
-            if (status.canJump)
+            base.ModuleEntry();
+            if (status.jumpQueueTimer > 0f)
             {
                 OnJumpBtnDown();
             }
-            //else
-            //{
-            //    motorStatus.jumpQueueTimer = MaxJumpQueueDuration;
-            //}
         }
 
-        if (GameInput.JumpBtnUp)
+        public override void TickUpdate()
         {
-            OnJumpBtnUp();
+            TickTimers();
+
+            if (GameInput.JumpBtnDown) // && !isJumping for onGround
+            {
+                if (status.canJump)
+                {
+                    OnJumpBtnDown();
+                }
+                //else
+                //{
+                //    motorStatus.jumpQueueTimer = MaxJumpQueueDuration;
+                //}
+            }
+
+            if (GameInput.JumpBtnUp)
+            {
+                OnJumpBtnUp();
+            }
         }
-    }
 
-    public override void TickFixedUpdate()
-    {
-        base.TickFixedUpdate();
-        CheckIfJustWalkeOffPlatform();
-
-        if (status.justLanded)
+        public override void TickFixedUpdate()
         {
-            status.isJumping = false;
+            base.TickFixedUpdate();
+            CheckIfJustWalkeOffPlatform();
+
+            if (status.justLanded)
+            {
+                status.isJumping = false;
+                status.coyoteTimer = -1f;
+            }
+        }
+
+        //public override void TickFixedUpdate()
+        //{
+        //    base.TickFixedUpdate();
+        //    CheckIfJustWalkeOffPlatform();
+
+        //    if (motorStatus.justLanded)
+        //    {
+        //        //If player just landed and has a jump queued up.
+        //        //if (motorStatus.jumpQueueTimer > 0f)
+        //        //{
+        //        //    OnJumpBtnDown();
+        //        //}
+        //        //else
+        //        {
+        //            motorStatus.isJumping = false;
+        //            motorStatus.coyoteTimer = -1f;
+        //        }
+        //    }
+        //}
+        #endregion
+
+        void OnJumpBtnDown()
+        {
+            status.isJumping = true;
+            status.jumpQueueTimer = -1f;
             status.coyoteTimer = -1f;
+
+            status.currentVelocity.y = settings.MaxJumpForce;
+        }
+
+        void OnJumpBtnUp()
+        {
+            if (status.currentVelocity.y > settings.MinJumpForce)
+            {
+
+
+                status.currentVelocity.y = settings.MinJumpForce;
+            }
+        }
+
+        void TickTimers()
+        {
+            if (status.coyoteTimer > 0f)
+            {
+                status.coyoteTimer -= Time.deltaTime;
+            }
+
+            if (status.jumpQueueTimer > 0f)
+            {
+                status.jumpQueueTimer -= Time.deltaTime;
+            }
+        }
+
+        void CheckIfJustWalkeOffPlatform()
+        {
+            if (!status.isOnGround && status.isOnGroundPrevious && !status.isJumping)
+            {
+                status.coyoteTimer = settings.MaxCoyoteDuration;
+            }
         }
     }
 
-    //public override void TickFixedUpdate()
+    //public override void TickUpdate()
     //{
-    //    base.TickFixedUpdate();
-    //    CheckIfJustWalkeOffPlatform();
-
-    //    if (motorStatus.justLanded)
+    //    if (status.currentVelocity.y > 0)
     //    {
-    //        //If player just landed and has a jump queued up.
-    //        //if (motorStatus.jumpQueueTimer > 0f)
-    //        //{
-    //        //    OnJumpBtnDown();
-    //        //}
-    //        //else
-    //        {
-    //            motorStatus.isJumping = false;
-    //            motorStatus.coyoteTimer = -1f;
-    //        }
+    //        status.currentVelocity.y = 0;
     //    }
     //}
-    #endregion
 
-    void OnJumpBtnDown()
-    {
-        status.isJumping = true;
-        status.jumpQueueTimer = -1f;
-        status.coyoteTimer = -1f;
-
-        status.currentVelocity.y = settings.MaxJumpForce;
-    }
-
-    void OnJumpBtnUp()
-    {
-        if (status.currentVelocity.y > settings.MinJumpForce)
-        {
-
-
-            status.currentVelocity.y = settings.MinJumpForce;
-        }
-    }
-
-    void TickTimers()
-    {
-        if (status.coyoteTimer > 0f)
-        {
-            status.coyoteTimer -= Time.deltaTime;
-        }
-
-        if (status.jumpQueueTimer > 0f)
-        {
-            status.jumpQueueTimer -= Time.deltaTime;
-        }
-    }
-
-    void CheckIfJustWalkeOffPlatform()
-    {
-        if (!status.isOnGround && status.isOnGroundPrevious && !status.isJumping)
-        {
-            status.coyoteTimer = settings.MaxCoyoteDuration;
-        }
-    }
 }
-
-//public override void TickUpdate()
-//{
-//    if (status.currentVelocity.y > 0)
-//    {
-//        status.currentVelocity.y = 0;
-//    }
-//}

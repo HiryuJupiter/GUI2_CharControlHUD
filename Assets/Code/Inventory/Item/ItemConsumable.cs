@@ -1,27 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemConsumable : Item
+
+namespace MyNameSpace
 {
-    public ItemConsumable() 
+    public class ItemConsumable : Item
     {
-        isStackable = true;
-        itemType = ItemType.Consumable;
-
-        cooldownDuration = 0.5f;
-    }
-
-    public override bool TryUseItem()
-    {
-        if (CooldownReady)
+        public ItemConsumable()
         {
-            CooldownTimer = cooldownDuration;
-            SceneManager.Instance.StartCoroutine(StartCDTimer());
+            isStackable = true;
+            itemType = ItemType.Consumable;
 
-
-            PlayerController.Instance.HealPlayer(20);
-            return true;
+            cooldownDuration = 0.5f;
         }
-        return false;
+
+        public override bool TryUseItem()
+        {
+            if (CooldownReady)
+            {
+                CooldownTimer = cooldownDuration;
+                SceneManager.Instance.StartCoroutine(StartCDTimer());
+
+
+                PlayerController.Instance.HealPlayer(20);
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -2,24 +2,28 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class AbilitiesHotbar : MonoBehaviour
+
+namespace MyNameSpace
 {
-    [SerializeField] AbilitiesHotbarSlot[] slots;
-
-
-    public void DisplayCooldown (int slotNumber, float duration)
+    public class AbilitiesHotbar : MonoBehaviour
     {
-        if (slotNumber < slots.Length)
+        [SerializeField] AbilitiesHotbarSlot[] slots;
+
+
+        public void DisplayCooldown(int slotNumber, float duration)
         {
-            slots[slotNumber].DoCooldownMask(duration);
+            if (slotNumber < slots.Length)
+            {
+                slots[slotNumber].DoCooldownMask(duration);
+            }
         }
-    }
 
-    public void UpdateSlotIcons (GameData player)
-    {
-        foreach (var slot in slots)
+        public void UpdateSlotIcons(GameData player)
         {
-            slot.UpdateSlotInfo(player);
+            foreach (var slot in slots)
+            {
+                slot.UpdateSlotInfo(player);
+            }
         }
     }
 }

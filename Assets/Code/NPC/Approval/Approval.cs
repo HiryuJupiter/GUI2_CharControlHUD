@@ -3,45 +3,48 @@ using System.Collections;
 
 
 
-//Encapsulates the approval rating of an NPC
-public class Approval : MonoBehaviour
-{
-    public ApprovalLevels level = ApprovalLevels.Neutral;
 
-    //Method overloads so that we can modify the rating using both a bool and using an enum
-    public void ApplyInfluence (bool isPositive)
+namespace MyNameSpace
+{//Encapsulates the approval rating of an NPC
+    public class Approval : MonoBehaviour
     {
-        if (isPositive)
-        {
-            Decrease();
-        }
-        else
-        {
-            Increase();
-        }
-    }
+        public ApprovalLevels level = ApprovalLevels.Neutral;
 
-    public void ApplyInfluence(ApprovalAffect affect)
-    {
-        if (affect == ApprovalAffect.Increase)
+        //Method overloads so that we can modify the rating using both a bool and using an enum
+        public void ApplyInfluence(bool isPositive)
         {
-            Increase();
+            if (isPositive)
+            {
+                Decrease();
+            }
+            else
+            {
+                Increase();
+            }
         }
-        else if (affect == ApprovalAffect.Decrease)
+
+        public void ApplyInfluence(ApprovalAffect affect)
         {
-            Decrease();
+            if (affect == ApprovalAffect.Increase)
+            {
+                Increase();
+            }
+            else if (affect == ApprovalAffect.Decrease)
+            {
+                Decrease();
+            }
         }
-    }
 
-    //Decrease and increase the levels accordingly
-    void Decrease ()
-    {
-        level = level == ApprovalLevels.Dislike ? ApprovalLevels.Neutral : ApprovalLevels.Like;
-    }
+        //Decrease and increase the levels accordingly
+        void Decrease()
+        {
+            level = level == ApprovalLevels.Dislike ? ApprovalLevels.Neutral : ApprovalLevels.Like;
+        }
 
-    void Increase()
-    {
-        level = level == ApprovalLevels.Like ? ApprovalLevels.Neutral : ApprovalLevels.Dislike;
-    }
+        void Increase()
+        {
+            level = level == ApprovalLevels.Like ? ApprovalLevels.Neutral : ApprovalLevels.Dislike;
+        }
 
+    }
 }

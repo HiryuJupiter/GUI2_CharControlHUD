@@ -2,34 +2,38 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
-public class SceneLoaderAsyncTafe : MonoBehaviour
+
+namespace MyNameSpace
 {
-    public GameObject loadingScreen;
-    public Image progressBar;
-    public Text progressText;
-
-    public void LoadLevel(int sceneIndex)
+    public class SceneLoaderAsyncTafe : MonoBehaviour
     {
-        StartCoroutine(LoadAsynchronously(sceneIndex));
-    }
+        public GameObject loadingScreen;
+        public Image progressBar;
+        public Text progressText;
 
-    IEnumerator LoadAsynchronously(int sceneIndex)
-    {
-        AsyncOperation operation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneIndex);
-
-        loadingScreen.SetActive(true);
-
-        while (!operation.isDone)
+        public void LoadLevel(int sceneIndex)
         {
-            //the last 10 % can't be multi-threaded
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-
-            progressBar.fillAmount = progress;
-            progressText.text = progress * 100 + "%";
-
-
-            yield return null;
+            StartCoroutine(LoadAsynchronously(sceneIndex));
         }
-    }
 
+        IEnumerator LoadAsynchronously(int sceneIndex)
+        {
+            AsyncOperation operation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneIndex);
+
+            loadingScreen.SetActive(true);
+
+            while (!operation.isDone)
+            {
+                //the last 10 % can't be multi-threaded
+                float progress = Mathf.Clamp01(operation.progress / 0.9f);
+
+                progressBar.fillAmount = progress;
+                progressText.text = progress * 100 + "%";
+
+
+                yield return null;
+            }
+        }
+
+    }
 }

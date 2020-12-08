@@ -1,30 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerCollider_SimplestStationary : MonoBehaviour
+
+namespace MyNameSpace
 {
-    [SerializeField] float lifeTime = 0.2f;
-    [SerializeField] int damage = 5;
-
-    protected LayerMask enemyLayer;
-
-    protected void Awake()
+    public class PlayerCollider_SimplestStationary : MonoBehaviour
     {
-        enemyLayer = CharacterSettings.instance.EnemyLayer;
-    }
+        [SerializeField] float lifeTime = 0.2f;
+        [SerializeField] int damage = 5;
 
-    IEnumerator Start()
-    {
-        yield return new WaitForSeconds(lifeTime);
-        Destroy(transform.parent.gameObject);
-    }
+        protected LayerMask enemyLayer;
 
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (enemyLayer == (enemyLayer | 1 << other.gameObject.layer))
+        protected void Awake()
         {
-            other.GetComponent<Enemy>().TakeDamage(damage);
+            enemyLayer = CharacterSettings.instance.EnemyLayer;
+        }
+
+        IEnumerator Start()
+        {
+            yield return new WaitForSeconds(lifeTime);
+            Destroy(transform.parent.gameObject);
+        }
+
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (enemyLayer == (enemyLayer | 1 << other.gameObject.layer))
+            {
+                other.GetComponent<Enemy>().TakeDamage(damage);
+            }
         }
     }
 }

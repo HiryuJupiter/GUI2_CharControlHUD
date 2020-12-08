@@ -2,25 +2,30 @@
 using System.Collections;
 using UnityEditor;
 
-public class Module_Gravity : ModuleBase
-{
-    public Module_Gravity(PlayerController motor, PlayerFeedbacks feedback) : base(motor, feedback) { }
 
-    public override void TickFixedUpdate()
+namespace MyNameSpace
+{
+    public class Module_Gravity : ModuleBase
     {
-        //Apply gravity when not on ground
-        if (status.isOnGround)
+        public Module_Gravity(PlayerController motor, PlayerFeedbacks feedback) : base(motor, feedback) { }
+
+        public override void TickFixedUpdate()
         {
-            if (status.isFalling)
+            //Apply gravity when not on ground
+            if (status.isOnGround)
             {
-                status.currentVelocity.y = 0;
+                if (status.isFalling)
+                {
+                    status.currentVelocity.y = 0;
+                }
+            }
+            else
+            {
+
+                status.currentVelocity.y -= settings.Gravity * Time.deltaTime;
+                status.currentVelocity.y = Mathf.Clamp(status.currentVelocity.y, settings.MaxFallSpeed, status.currentVelocity.y);
             }
         }
-        else
-        {
-
-            status.currentVelocity.y -= settings.Gravity * Time.deltaTime;
-            status.currentVelocity.y = Mathf.Clamp(status.currentVelocity.y, settings.MaxFallSpeed, status.currentVelocity.y);
-        }
     }
+
 }

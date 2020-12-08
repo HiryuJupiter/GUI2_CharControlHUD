@@ -4,51 +4,55 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class UISlotManager_Equipment : UISlotManagerBase
+
+namespace MyNameSpace
 {
-    public static UISlotManager_Equipment Instance;
-    public Camera equipmentCamera;
-
-    StatPageStatsWriter statWriter;
-    PlayerController player;
-
-    //Item GetInventoryItem(int index) => ItemDirectory.GetItem(inventory.ItemList[0].ID);
-
-    #region MonoBehavior
-    void Awake()
+    public class UISlotManager_Equipment : UISlotManagerBase
     {
-        Instance = this;
-    }
+        public static UISlotManager_Equipment Instance;
+        public Camera equipmentCamera;
 
-    void Start()
-    {
-        statWriter = StatPageStatsWriter.Instance;
-        player = PlayerController.Instance;
-    }
+        StatPageStatsWriter statWriter;
+        PlayerController player;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
+        //Item GetInventoryItem(int index) => ItemDirectory.GetItem(inventory.ItemList[0].ID);
+
+        #region MonoBehavior
+        void Awake()
         {
-            ToggleOpen();
+            Instance = this;
         }
-    }
-    #endregion
 
-    public override void ToggleOpen()
-    {
-        SetIsOpen(isOpen = !isOpen);
-        equipmentCamera.enabled = isOpen;
-        statWriter.InitializeAllInfo(player.data);
+        void Start()
+        {
+            statWriter = StatPageStatsWriter.Instance;
+            player = PlayerController.Instance;
+        }
 
-    }
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                ToggleOpen();
+            }
+        }
+        #endregion
+
+        public override void ToggleOpen()
+        {
+            SetIsOpen(isOpen = !isOpen);
+            equipmentCamera.enabled = isOpen;
+            statWriter.InitializeAllInfo(player.data);
+
+        }
 
 
 
-    //#region Outputs only, from Inventory -> UI
-    //protected override void RefreshInventoryDisplay()
-    //{
-    //    if (!isOpen) return;
+        //#region Outputs only, from Inventory -> UI
+        //protected override void RefreshInventoryDisplay()
+        //{
+
+    }//    if (!isOpen) return;
 
     //    //Go through all slots and set them accordingly
     //    UpdateSlot(inventory.ItemList[0], Slots[0]); //Weapon left

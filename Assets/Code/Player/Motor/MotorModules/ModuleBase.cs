@@ -1,26 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class ModuleBase
+
+namespace MyNameSpace
 {
-    protected CharacterSettings settings;
-    protected PlayerController player;
-    protected PlayerControllerStatus status;
-    protected PlayerFeedbacks feedback;
-    protected MotorRaycaster raycaster;
-
-    public ModuleBase(PlayerController player, PlayerFeedbacks feedback)
+    public abstract class ModuleBase
     {
-        this.player = player;
-        this.feedback = feedback;
-        status = player.status;
-        raycaster   = player.Raycaster;
+        protected CharacterSettings settings;
+        protected PlayerController player;
+        protected PlayerControllerStatus status;
+        protected PlayerFeedbacks feedback;
+        protected MotorRaycaster raycaster;
 
-        settings = CharacterSettings.instance;
+        public ModuleBase(PlayerController player, PlayerFeedbacks feedback)
+        {
+            this.player = player;
+            this.feedback = feedback;
+            status = player.status;
+            raycaster = player.Raycaster;
+
+            settings = CharacterSettings.instance;
+        }
+
+        public virtual void ModuleEntry() { }
+        public virtual void TickFixedUpdate() { }
+        public virtual void TickUpdate() { }
+        public virtual void ModuleExit() { }
     }
-
-    public virtual void ModuleEntry() { }
-    public virtual void TickFixedUpdate() { }
-    public virtual void TickUpdate() { }
-    public virtual void ModuleExit() { }
 }

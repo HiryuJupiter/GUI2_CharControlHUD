@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum ItemID
+
+namespace MyNameSpace
 {
-    Empty =  0,
+    public enum ItemID
+    {
+        Empty = 0,
 
-    weapon = 1,
+        weapon = 1,
 
-    armor = 101,
+        armor = 101,
 
-    potion = 1001,
+        potion = 1001,
+    }
 }

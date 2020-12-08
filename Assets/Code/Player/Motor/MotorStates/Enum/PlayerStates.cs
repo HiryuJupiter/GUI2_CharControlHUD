@@ -1,7 +1,11 @@
-﻿public enum MotorStates
+﻿
+namespace MyNameSpace
 {
-    OnGround, Aerial, 
-    Dead,
+    public enum MotorStates
+    {
+        OnGround, Aerial,
+        Dead,
 
-    //Hurt,
+        //Hurt,
+    }
 }

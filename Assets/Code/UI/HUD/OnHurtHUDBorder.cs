@@ -1,27 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OnHurtHUDBorder : MonoBehaviour
+
+namespace MyNameSpace
 {
-    [SerializeField] CanvasGroup onHurtRedFlash;
-
-    void Awake()
+    public class OnHurtHUDBorder : MonoBehaviour
     {
-        onHurtRedFlash.alpha = 0f;
-    }
+        [SerializeField] CanvasGroup onHurtRedFlash;
 
-    void Update()
-    {
-        //Fade out the red-flashing effect when player is hurt.
-        if (onHurtRedFlash.alpha > 0f)
+        void Awake()
         {
-            onHurtRedFlash.alpha -= Time.deltaTime * 5f;
+            onHurtRedFlash.alpha = 0f;
         }
-    }
 
-    public void FlashRed()
-    {
-        //When hurt, set red borders to visible
-        onHurtRedFlash.alpha = 1f;
+        void Update()
+        {
+            //Fade out the red-flashing effect when player is hurt.
+            if (onHurtRedFlash.alpha > 0f)
+            {
+                onHurtRedFlash.alpha -= Time.deltaTime * 5f;
+            }
+        }
+
+        public void FlashRed()
+        {
+            //When hurt, set red borders to visible
+            onHurtRedFlash.alpha = 1f;
+        }
     }
 }

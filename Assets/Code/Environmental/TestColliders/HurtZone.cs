@@ -2,22 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HurtZone : MonoBehaviour
+
+namespace MyNameSpace
 {
-    LayerMask playerBodyLayer;
-
-    protected void Awake()
+    public class HurtZone : MonoBehaviour
     {
-        playerBodyLayer = CharacterSettings.instance.PlayerBodyLayer;
-    }
+        LayerMask playerBodyLayer;
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (playerBodyLayer == (playerBodyLayer | 1 << other.gameObject.layer))
+        protected void Awake()
         {
-            other.GetComponent<PlayerController>().DamagePlayer(transform.position, 50);
+            playerBodyLayer = CharacterSettings.instance.PlayerBodyLayer;
+        }
 
-            Debug.Log(" Player walked into Hurt Zone");
+        void OnTriggerEnter(Collider other)
+        {
+            //Damages the player when the player hits this trigger
+            if (playerBodyLayer == (playerBodyLayer | 1 << other.gameObject.layer))
+            {
+                other.GetComponent<PlayerController>().DamagePlayer(transform.position, 50);
+
+                Debug.Log(" Player walked into Hurt Zone");
+            }
         }
     }
+
 }

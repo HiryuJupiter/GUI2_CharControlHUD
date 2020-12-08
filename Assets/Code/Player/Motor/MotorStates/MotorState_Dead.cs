@@ -2,32 +2,36 @@
 using System.Collections.Generic;
 using System.Collections;
 
-public class MotorState_Dead : MotorStateBase
+
+namespace MyNameSpace
 {
-    public MotorState_Dead(PlayerController player, PlayerFeedbacks feedbacks) : base(player, feedbacks)
+    public class MotorState_Dead : MotorStateBase
     {
-        modules = new List<ModuleBase>()
+        public MotorState_Dead(PlayerController player, PlayerFeedbacks feedbacks) : base(player, feedbacks)
+        {
+            modules = new List<ModuleBase>()
         {
             new Module_Gravity(player, feedbacks),
             new Module_NoMovement(player, feedbacks),
         };
-    }
+        }
 
-    public override void StateEntry()
-    {
-        base.StateEntry();
-        feedback.Animator.PlayDeath();
-    }
-    public override void TickUpdate()
-    {
-        base.TickUpdate();
-    }
+        public override void StateEntry()
+        {
+            base.StateEntry();
+            feedback.Animator.PlayDeath();
+        }
+        public override void TickUpdate()
+        {
+            base.TickUpdate();
+        }
 
-    protected override void Transitions()
-    {
-    }
+        protected override void Transitions()
+        {
+        }
 
-    public override void StateExit ()
-    {
+        public override void StateExit()
+        {
+        }
     }
 }

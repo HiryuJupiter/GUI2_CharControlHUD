@@ -2,34 +2,38 @@
 using System.Collections;
 using System;
 
-public class SceneEvent
+
+namespace MyNameSpace
 {
-    public delegate void evenHandler();
-    public event evenHandler OnEvent ;
-
-    string eventName;
-
-    public SceneEvent(string eventName)
+    public class SceneEvent
     {
-        //Debug.Log($"event {eventName} constructed");
-        this.eventName = eventName;
-    }
+        public delegate void evenHandler();
+        public event evenHandler OnEvent;
 
-    public void CallEvent()
-    {
-        OnEvent?.Invoke();
-    }
+        string eventName;
 
-    public void UnSubscribeAll()
-    {
-        if (OnEvent != null)
+        public SceneEvent(string eventName)
         {
-            //Debug.Log($"{eventName} unsubscribing.");
-            Delegate[] clients = OnEvent.GetInvocationList();
+            //Debug.Log($"event {eventName} constructed");
+            this.eventName = eventName;
+        }
 
-            foreach (Delegate d in clients)
+        public void CallEvent()
+        {
+            OnEvent?.Invoke();
+        }
+
+        public void UnSubscribeAll()
+        {
+            if (OnEvent != null)
             {
-                OnEvent -= (evenHandler)d;
+                //Debug.Log($"{eventName} unsubscribing.");
+                Delegate[] clients = OnEvent.GetInvocationList();
+
+                foreach (Delegate d in clients)
+                {
+                    OnEvent -= (evenHandler)d;
+                }
             }
         }
     }

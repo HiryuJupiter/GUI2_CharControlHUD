@@ -1,22 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemArmor : Item
+
+namespace MyNameSpace
 {
-    public ItemArmor() 
+    public class ItemArmor : Item
     {
-        isStackable = false;
-        itemType = ItemType.Armor;
-    }
+        public ItemArmor()
+        {
+            isStackable = false;
+            itemType = ItemType.Armor;
+        }
 
-    public override void ItemSlotted()
-    {
+        public override void ItemSlotted()
+        {
 
-        PlayerController.Instance.SetArmorVisibility(true);
-    }
+            PlayerController.Instance.SetArmorVisibility(true);
+        }
 
-    public override void ItemUnslotted()
-    {
-        PlayerController.Instance.SetArmorVisibility(false);
+        public override void ItemUnslotted()
+        {
+            PlayerController.Instance.SetArmorVisibility(false);
+        }
     }
 }

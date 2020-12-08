@@ -1,59 +1,66 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(MotorRaycaster))]
-[RequireComponent(typeof(Module_Jump))]
-public abstract class MotorStateBase
+
+namespace MyNameSpace
 {
-    protected CharacterSettings      settings;
-    protected PlayerController     player;
-    protected PlayerFeedbacks feedback;
-    protected PlayerControllerStatus       motorStatus;
-    protected MotorRaycaster    raycaster;
 
-    protected List<ModuleBase> modules = new List<ModuleBase>();
-
-    public MotorStateBase(PlayerController player, PlayerFeedbacks feedback)
+    [RequireComponent(typeof(MotorRaycaster))]
+    [RequireComponent(typeof(Module_Jump))]
+    public abstract class MotorStateBase
     {
-        this.player      = player;
-        this.feedback   = feedback;
-        motorStatus     = player.status;
-        raycaster       = player.Raycaster;
-        settings        = CharacterSettings.instance;
-    }
+        protected CharacterSettings settings;
+        protected PlayerController player;
+        protected PlayerFeedbacks feedback;
+        protected PlayerControllerStatus motorStatus;
+        protected MotorRaycaster raycaster;
 
-    public virtual void StateEntry()
-    {
-        foreach (var m in modules)
+        protected List<ModuleBase> modules = new List<ModuleBase>();
+
+        public MotorStateBase(PlayerController player, PlayerFeedbacks feedback)
         {
-            m.ModuleEntry();
+            this.player = player;
+            this.feedback = feedback;
+            motorStatus = player.status;
+            raycaster = player.Raycaster;
+            settings = CharacterSettings.instance;
         }
-    }
 
-    public virtual void TickUpdate() 
-    {
-        foreach (var m in modules)
+        public virtual void StateEntry()
         {
-            m.TickUpdate();
+            foreach (var m in modules)
+            {
+                m.ModuleEntry();
+            }
         }
-    }
 
-    public virtual void TickFixedUpdate()
-    {
-        foreach (var m in modules)
+        public virtual void TickUpdate()
         {
-            m.TickFixedUpdate();
+            foreach (var m in modules)
+            {
+                m.TickUpdate();
+            }
         }
-        Transitions();
-    }
 
-    public virtual void StateExit()
-    {
-        foreach (var m in modules)
+        public virtual void TickFixedUpdate()
         {
-            m.ModuleExit();
+            foreach (var m in modules)
+            {
+                m.TickFixedUpdate();
+            }
+            Transitions();
         }
-    }
 
-    protected abstract void Transitions();
+        public virtual void StateExit()
+        {
+            foreach (var m in modules)
+
+
+            {
+                m.ModuleExit();
+            }
+        }
+
+        protected abstract void Transitions();
+    }
 }

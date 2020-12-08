@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum PlayerMotorTransitions
+namespace MyNameSpace
 {
-    PlayerHit,
-    Player
+    public enum PlayerMotorTransitions
+    {
+        PlayerHit,
+        Player
+    }
 }

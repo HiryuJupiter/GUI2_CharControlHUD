@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum RacialTypes //Race
+
+namespace MyNameSpace
 {
-    FireBirds,
-    IceFrogs,
+    public enum RacialTypes //Race
+    {
+        FireBirds,
+        IceFrogs,
+    }
+
 }

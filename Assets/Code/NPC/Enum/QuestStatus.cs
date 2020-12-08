@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum QuestStatus
+
+namespace MyNameSpace
 {
-    WaitingToAccept, InProgress, HandedIn_RewardsAvailable, RewardCollected_AllDone
+    public enum QuestStatus
+    {
+        WaitingToAccept, InProgress, HandedIn_RewardsAvailable, RewardCollected_AllDone
+    }
 }

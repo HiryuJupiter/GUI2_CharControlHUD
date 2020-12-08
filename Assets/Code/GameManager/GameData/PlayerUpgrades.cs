@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
-public class PlayerUpgrades
+
+namespace MyNameSpace
 {
-    //Unlcoked profession abilities
-    //Unlocked zones
-    //Unlocked services
+    [System.Serializable]
+    public class PlayerUpgrades
+    {
+        //Unlcoked profession abilities
+        //Unlocked zones
+        //Unlocked services
+    }
 }

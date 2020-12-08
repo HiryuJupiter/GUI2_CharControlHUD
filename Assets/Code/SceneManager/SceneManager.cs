@@ -2,60 +2,64 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManager : MonoBehaviour
+
+namespace MyNameSpace
 {
-    //Consts
-    const int SceneIndex_MainMenu = 0;
-
-    //Static
-    public static SceneManager Instance;
-
-    //References
-    UIManager ui;
-    PauseMenu pauseMenu;
-
-    //State
-    GameState[] states;
-
-    //Properties
-    public static GameStates gameState { get; set; } = GameStates.CharacterControl;
-
-    #region MonoBehavior
-    void Awake()
+    public class SceneManager : MonoBehaviour
     {
-        Instance = this;
-    }
+        //Consts
+        const int SceneIndex_MainMenu = 0;
 
-    void Start()
-    {
-        //Reference
-        ui = UIManager.Instance;
-        pauseMenu = PauseMenu.Instance;
+        //Static
+        public static SceneManager Instance;
 
-        //Initialize UI display for HUD items
-    }
+        //References
+        UIManager ui;
+        PauseMenu pauseMenu;
 
-    void Update()
-    {
-        //Toggle pause when player pressed Escape
-        if ((Input.GetKeyDown(KeyCode.Escape)))
+        //State
+        GameState[] states;
+
+        //Properties
+        public static GameStates gameState { get; set; } = GameStates.CharacterControl;
+
+        #region MonoBehavior
+        void Awake()
         {
-            pauseMenu.TogglePause();
+            Instance = this;
         }
-    }
-    #endregion
 
-    #region Public - events
-    public void Restart()
-    {
-        //Load current scene
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-    }
+        void Start()
+        {
+            //Reference
+            ui = UIManager.Instance;
+            pauseMenu = PauseMenu.Instance;
 
-    public void ToMainMenu()
-    {
-        //Load main menu scene
-        UnityEngine.SceneManagement.SceneManager.LoadScene(SceneIndex_MainMenu);
+            //Initialize UI display for HUD items
+        }
+
+        void Update()
+        {
+            //Toggle pause when player pressed Escape
+            if ((Input.GetKeyDown(KeyCode.Escape)))
+            {
+                pauseMenu.TogglePause();
+            }
+        }
+        #endregion
+
+        #region Public - events
+        public void Restart()
+        {
+            //Load current scene
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+
+        public void ToMainMenu()
+        {
+            //Load main menu scene
+            UnityEngine.SceneManagement.SceneManager.LoadScene(SceneIndex_MainMenu);
+        }
+        #endregion
     }
-    #endregion
 }

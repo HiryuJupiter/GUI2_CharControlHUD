@@ -4,50 +4,55 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class UISlotManager_Bag : UISlotManagerBase
+
+namespace MyNameSpace
 {
-    public static UISlotManager_Bag Instance;
-
-    #region MonoBehavior
-    void Awake()
+    public class UISlotManager_Bag : UISlotManagerBase
     {
-        Instance = this;
-    }
+        public static UISlotManager_Bag Instance;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
+        #region MonoBehavior
+        void Awake()
         {
-            ToggleOpen();
+            Instance = this;
         }
-    }
-    #endregion
 
-    #region Public - set sorting mode
-    public void SortByWeapon()
-    {
-        sortOn = true;
-        sortingMap = ItemSortingMaps.map_weaponFirst;
-        RefreshInventoryDisplay();
-        SortByNone();
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                ToggleOpen();
+            }
+        }
+        #endregion
+
+        #region Public - set sorting mode
+        public void SortByWeapon()
+        {
+            sortOn = true;
+            sortingMap = ItemSortingMaps.map_weaponFirst;
+            RefreshInventoryDisplay();
+            SortByNone();
+        }
+
+        public void SortByArmor()
+        {
+            sortOn = true;
+            sortingMap = ItemSortingMaps.map_armorFirst;
+            RefreshInventoryDisplay();
+            SortByNone();
+        }
+
+        public void SortByConsumable()
+        {
+            sortOn = true;
+            sortingMap = ItemSortingMaps.map_ConsumableFirst;
+            RefreshInventoryDisplay();
+            SortByNone();
+        }
+
+        public void SortByNone() => sortOn = false;
+        #endregion
     }
 
-    public void SortByArmor()
-    {
-        sortOn = true;
-        sortingMap = ItemSortingMaps.map_armorFirst;
-        RefreshInventoryDisplay();
-        SortByNone();
-    }
-
-    public void SortByConsumable()
-    {
-        sortOn = true;
-        sortingMap = ItemSortingMaps.map_ConsumableFirst;
-        RefreshInventoryDisplay();
-        SortByNone();
-    }
-
-    public void SortByNone() => sortOn = false;
-    #endregion
 }

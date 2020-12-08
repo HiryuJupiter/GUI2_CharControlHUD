@@ -1,27 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class CanvasPageToggle : MonoBehaviour
+
+namespace MyNameSpace
 {
-    [SerializeField] protected CanvasGroup canvasGroup;
-
-    protected bool isOpen;
-
-    public virtual void ToggleOpen()
+    public abstract class CanvasPageToggle : MonoBehaviour
     {
-        SetIsOpen(isOpen = !isOpen);
-    }
+        [SerializeField] protected CanvasGroup canvasGroup;
 
-    public virtual void SetIsOpen(bool isOpen)
-    {
-        this.isOpen = isOpen;
-        if (isOpen)
+        protected bool isOpen;
+
+        public virtual void ToggleOpen()
         {
-            CanvasGroupUtil.InstantReveal(canvasGroup);
+            SetIsOpen(isOpen = !isOpen);
         }
-        else
+
+        public virtual void SetIsOpen(bool isOpen)
         {
-            CanvasGroupUtil.InstantHide(canvasGroup);
+            this.isOpen = isOpen;
+            if (isOpen)
+            {
+                CanvasGroupUtil.InstantReveal(canvasGroup);
+            }
+            else
+            {
+                CanvasGroupUtil.InstantHide(canvasGroup);
+            }
         }
     }
 }

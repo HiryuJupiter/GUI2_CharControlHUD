@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UISlotManager_Shop : UISlotManagerBase
+
+namespace MyNameSpace
 {
-    void Start()
+    public class UISlotManager_Shop : UISlotManagerBase
     {
-        SetIsOpen(false);
+        void Start()
+        {
+            SetIsOpen(false);
+        }
     }
 }

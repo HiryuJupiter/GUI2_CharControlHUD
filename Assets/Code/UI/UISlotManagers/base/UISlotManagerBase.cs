@@ -3,124 +3,130 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public abstract class UISlotManagerBase: CanvasPageToggle
+
+
+namespace MyNameSpace
 {
-    [SerializeField] protected List<UIItemSlot> Slots = new List<UIItemSlot>();
-    protected Inventory inventory;
-
-    protected int[] sortingMap;
-    protected bool sortOn = false;
-
-    public int SlotCount => Slots.Count;
-
-    public virtual void Initialize(Inventory inventory)
+    public abstract class UISlotManagerBase : CanvasPageToggle
     {
-        this.inventory = inventory;
+        [SerializeField] protected List<UIItemSlot> Slots = new List<UIItemSlot>();
+        protected Inventory inventory;
 
-        inventory.OnItemListChanged += RefreshInventoryDisplay;
-        inventory.OnSlotChanged += RefreshSlotDisplay;
+        protected int[] sortingMap;
+        protected bool sortOn = false;
 
-        for (int i = 0; i < Slots.Count; i++)
+        public int SlotCount => Slots.Count;
+
+        public virtual void Initialize(Inventory inventory)
         {
-            Slots[i].Initialize(inventory, i);
-        }
+            this.inventory = inventory;
 
-        //inventory.TryAddItem(new ItemSaveFile(0, 1));
-        RefreshInventoryDisplay();
-    }
+            inventory.OnItemListChanged += RefreshInventoryDisplay;
+            inventory.OnSlotChanged += RefreshSlotDisplay;
 
-    protected virtual void RefreshSlotDisplay(int slotIndex)
-    {
-        Slots[slotIndex].SetSlotWithoutNotifyingInventory(inventory.ItemList[slotIndex]);
-    }
+            for (int i = 0; i < Slots.Count; i++)
+            {
+                Slots[i].Initialize(inventory, i);
+            }
 
-    protected virtual void RefreshInventoryDisplay()
-    {
-        if (!isOpen) return;
-
-        //Sort the items
-        if (sortOn)
-        {
-            inventory.ReorderingInventory(sortingMap);
-        }
-        
-
-        //Go through all slots and set them accordingly
-        for (int i = 0; i < Slots.Count; i++)
-        {
-            Slots[i].SetSlotWithoutNotifyingInventory(inventory.ItemList[i]);
-            ////Set the slots within the item range to display items, and the ones outside the range to be empty.
-            //if (i < inventory.ItemList.Length)
-            //{
-            //    Slots[i].SetSlotWithoutNotifyingInventory(inventory.ItemList[i]);
-            //}
-            //else
-            //{
-            //    Slots[i].ClearSlotWithoutNotifyingInventory();
-            //}
-        }
-    }
-
-    public override void SetIsOpen(bool isOpen)
-    {
-        this.isOpen = isOpen;
-        if (isOpen)
-        {
-            CanvasGroupUtil.InstantReveal(canvasGroup);
+            //inventory.TryAddItem(new ItemSaveFile(0, 1));
             RefreshInventoryDisplay();
         }
-        else
+
+        protected virtual void RefreshSlotDisplay(int slotIndex)
         {
-            CanvasGroupUtil.InstantHide(canvasGroup);
+            Slots[slotIndex].SetSlotWithoutNotifyingInventory(inventory.ItemList[slotIndex]);
         }
 
-        foreach (var slot in Slots)
+        protected virtual void RefreshInventoryDisplay()
         {
-            slot.IsVisibleOnScreen = isOpen;
-        }
-    }
-    void OnDestroy()
-    {
-        //inventory.OnItemListChanged -= RefreshInventoryDisplay;
-        //inventory.OnSlotChanged -= RefreshSlotDisplay;
-    }
-}
+            if (!isOpen) return;
 
-/*
-    protected virtual void RefreshInventoryDisplay()
-    {
-        if (!isOpen) return;
-
-        //Sort the items
-        //List<Item> items = sortOn ? inventory.ItemList.OrderBy(x => sortingMap[(int)(x.ItemType)]).ToList() : inventory.ItemList;
-
-        //Sort the items
-        if (sortOn)
-        {
-            inventory.ReorderingInventory(sortingMap);
-
-            //Select the items where the ID is not empty, and then get the item from the item directory
-            var i = inventory.ItemList.Where(x => x.ID != ItemID.Empty).Select(x => ItemDirectory.GetItem(x.ID));
-            items = i.OrderBy(x => sortingMap[(int)(x.ItemType)]).ToList();
-        }
-        else
-        {
-            items = inventory.ItemList.Where(x => x.ID != ItemID.Empty).Select(x => ItemDirectory.GetItem(x.ID)).ToList();
-        }
-
-        //Go through all slots and set them accordingly
-        for (int i = 0; i < Slots.Count; i++)
-        {
-            //Set the slots within the item range to display items, and the ones outside the range to be empty.
-            if (i < items.Count)
+            //Sort the items
+            if (sortOn)
             {
-                Slots[i].ForceSetItemInSlot(new ItemSaveFile(items[i]));
+                inventory.ReorderingInventory(sortingMap);
+            }
+
+
+            //Go through all slots and set them accordingly
+            for (int i = 0; i < Slots.Count; i++)
+            {
+                Slots[i].SetSlotWithoutNotifyingInventory(inventory.ItemList[i]);
+                ////Set the slots within the item range to display items, and the ones outside the range to be empty.
+                //if (i < inventory.ItemList.Length)
+                //{
+                //    Slots[i].SetSlotWithoutNotifyingInventory(inventory.ItemList[i]);
+                //}
+                //else
+                //{
+                //    Slots[i].ClearSlotWithoutNotifyingInventory();
+                //}
+            }
+        }
+
+        public override void SetIsOpen(bool isOpen)
+        {
+            this.isOpen = isOpen;
+            if (isOpen)
+            {
+                CanvasGroupUtil.InstantReveal(canvasGroup);
+                RefreshInventoryDisplay();
             }
             else
             {
-                Slots[i].ClearSlot();
+                CanvasGroupUtil.InstantHide(canvasGroup);
+            }
+
+            foreach (var slot in Slots)
+            {
+                slot.IsVisibleOnScreen = isOpen;
             }
         }
+        void OnDestroy()
+        {
+            //inventory.OnItemListChanged -= RefreshInventoryDisplay;
+            //inventory.OnSlotChanged -= RefreshSlotDisplay;
+        }
     }
- */
 
+    /*
+        protected virtual void RefreshInventoryDisplay()
+        {
+            if (!isOpen) return;
+
+            //Sort the items
+            //List<Item> items = sortOn ? inventory.ItemList.OrderBy(x => sortingMap[(int)(x.ItemType)]).ToList() : inventory.ItemList;
+
+            //Sort the items
+            if (sortOn)
+            {
+                inventory.ReorderingInventory(sortingMap);
+
+                //Select the items where the ID is not empty, and then get the item from the item directory
+                var i = inventory.ItemList.Where(x => x.ID != ItemID.Empty).Select(x => ItemDirectory.GetItem(x.ID));
+                items = i.OrderBy(x => sortingMap[(int)(x.ItemType)]).ToList();
+            }
+            else
+            {
+                items = inventory.ItemList.Where(x => x.ID != ItemID.Empty).Select(x => ItemDirectory.GetItem(x.ID)).ToList();
+            }
+
+            //Go through all slots and set them accordingly
+            for (int i = 0; i < Slots.Count; i++)
+            {
+                //Set the slots within the item range to display items, and the ones outside the range to be empty.
+                if (i < items.Count)
+                {
+                    Slots[i].ForceSetItemInSlot(new ItemSaveFile(items[i]));
+                }
+                else
+                {
+                    Slots[i].ClearSlot();
+                }
+            }
+        }
+     */
+
+
+}

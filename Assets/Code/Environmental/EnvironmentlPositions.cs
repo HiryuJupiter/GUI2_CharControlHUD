@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnvironmentlPositions : MonoBehaviour
+namespace MyNameSpace
 {
-    public static EnvironmentlPositions Instance;
-
-    [SerializeField] Transform respawnPoint;
-
-    public Transform RespawnPoint => respawnPoint;
-
-    void Awake()
+    //A class just for storing key environmental positions
+    public class EnvironmentlPositions : MonoBehaviour
     {
-        Instance = this;
+        public static EnvironmentlPositions Instance;
+
+        [SerializeField] Transform respawnPoint;
+
+        public Transform RespawnPoint => respawnPoint;
+
+        void Awake()
+        {
+            Instance = this;
+        }
     }
 }

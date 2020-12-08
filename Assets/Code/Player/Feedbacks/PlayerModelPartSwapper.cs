@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerModelPartSwapper : MonoBehaviour
+
+namespace MyNameSpace
 {
-    public GameObject sword;
-    public GameObject shield;
-
-
-    public void SetWeaponVisibility(bool isVisible)
+    public class PlayerModelPartSwapper : MonoBehaviour
     {
-        sword.SetActive(isVisible);
-    }
+        public GameObject sword;
+        public GameObject shield;
 
-    public void SetArmorVisibility(bool isVisible)
-    {
-        shield.SetActive(isVisible);
+
+        public void SetWeaponVisibility(bool isVisible)
+        {
+            sword.SetActive(isVisible);
+        }
+
+        public void SetArmorVisibility(bool isVisible)
+        {
+            shield.SetActive(isVisible);
+        }
     }
 }

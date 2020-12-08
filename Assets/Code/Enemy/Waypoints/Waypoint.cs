@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Waypoint : MonoBehaviour
+namespace MyNameSpace
 {
+    public class Waypoint : MonoBehaviour
+    {
 
+    }
 }

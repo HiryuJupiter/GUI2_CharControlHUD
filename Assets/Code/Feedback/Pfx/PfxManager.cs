@@ -1,22 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PfxManager : MonoBehaviour
+namespace MyNameSpace
 {
-    public static PfxManager Instance;
-
-    [SerializeField] GameObject pfx_EnemyHurt;
-
-    Pool pool_EnemyHurt;
-
-    void Awake()
+    public class PfxManager : MonoBehaviour
     {
-        Instance = this;
-        pool_EnemyHurt = new Pool(pfx_EnemyHurt);
-    }
+        public static PfxManager Instance;
 
-    public void SpawnPfx_EnemyHurt (Vector3 pos)
-    {
-        pool_EnemyHurt.Spawn(pos);
+        [SerializeField] GameObject pfx_EnemyHurt;
+
+        Pool pool_EnemyHurt;
+
+        void Awake()
+        {
+            Instance = this;
+            pool_EnemyHurt = new Pool(pfx_EnemyHurt);
+        }
+
+        public void SpawnPfx_EnemyHurt(Vector3 pos)
+        {
+            pool_EnemyHurt.Spawn(pos);
+        }
     }
 }

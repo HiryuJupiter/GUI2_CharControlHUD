@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-/*
+
+namespace MyNameSpace
+{/*
  mechanim is not appliable to frame based animation, because you can just tell it to 
 Instead of setfloat, just animator.Play(
 
@@ -11,115 +13,116 @@ coolhotkey: alt + arrow to shift lines
 
 
  */
-public class Player3DAnimator : MonoBehaviour
-{
-    //Component reference
-    Animator animator;
-    int currentState;
-
-    //Parameter ID - movements
-    int jumpParamID;
-    int idleParamID;
-    int walkParamID;
-    int deathParamID;
-
-    //Parameter ID - attacks
-    int slash1ParamID;
-    int slash2ParamID;
-    int whirlwindAttckParamID;
-    int FireLobParamID;
-    int IcyShieldParamID;
-
-
-
-    bool inAttackAnimation;
-
-    int slashSequenceIndex = 1;
-
-    #region Mono
-    void Awake()
+    public class Player3DAnimator : MonoBehaviour
     {
-        animator = GetComponentInChildren<Animator>();
+        //Component reference
+        Animator animator;
+        int currentState;
 
-        //Param ID: Booleans
-        jumpParamID = Animator.StringToHash("Jump");
-        idleParamID = Animator.StringToHash("Idle");
-        walkParamID = Animator.StringToHash("Walk");
-        deathParamID = Animator.StringToHash("Death");
+        //Parameter ID - movements
+        int jumpParamID;
+        int idleParamID;
+        int walkParamID;
+        int deathParamID;
 
-        slash1ParamID = Animator.StringToHash("Slash1");
-        slash2ParamID = Animator.StringToHash("Slash2");
-        whirlwindAttckParamID = Animator.StringToHash("Whirl");
-        FireLobParamID = Animator.StringToHash("FireLob");
-        IcyShieldParamID = Animator.StringToHash("IcyShield");
-    }
-    #endregion
+        //Parameter ID - attacks
+        int slash1ParamID;
+        int slash2ParamID;
+        int whirlwindAttckParamID;
+        int FireLobParamID;
+        int IcyShieldParamID;
 
-    #region Movement animations
-    public void PlayIdle()
-    {
-        if (!inAttackAnimation)
+
+
+        bool inAttackAnimation;
+
+        int slashSequenceIndex = 1;
+
+        #region Mono
+        void Awake()
         {
-            ChangeAnimationState(idleParamID);
+            animator = GetComponentInChildren<Animator>();
+
+            //Param ID: Booleans
+            jumpParamID = Animator.StringToHash("Jump");
+            idleParamID = Animator.StringToHash("Idle");
+            walkParamID = Animator.StringToHash("Walk");
+            deathParamID = Animator.StringToHash("Death");
+
+            slash1ParamID = Animator.StringToHash("Slash1");
+            slash2ParamID = Animator.StringToHash("Slash2");
+            whirlwindAttckParamID = Animator.StringToHash("Whirl");
+            FireLobParamID = Animator.StringToHash("FireLob");
+            IcyShieldParamID = Animator.StringToHash("IcyShield");
         }
-    }
-    public void PlayWalk() => ChangeAnimationState(walkParamID);
-    public void PlayDeath() => ChangeAnimationState(deathParamID);
-    #endregion
+        #endregion
 
-    #region Attack animations
-    public void PlayAbilityAnimation (AbilityTypes ability)
-    {
-        switch (ability)
+        #region Movement animations
+        public void PlayIdle()
         {
-            case AbilityTypes.Slash:
-                PlaySlash();
-                break;
-            case AbilityTypes.Whirl:
-                PlayWhirl();
-                break;
-        }
-    }
-    #endregion
-
-    void ChangeAnimationState(int newState)
-    {
-        //Change to new animation state only if it's a different one
-        if (currentState != newState)
-        {
-            if (newState == idleParamID)
+            if (!inAttackAnimation)
             {
-                animator.CrossFade(newState, 0.1f); //Smoothly go back to idle
+                ChangeAnimationState(idleParamID);
             }
-            else
-            {
-                //Instantly play animations to make it snappy and responsive
-                animator.Play(newState);
-            }
-            currentState = newState;
         }
-    }
+        public void PlayWalk() => ChangeAnimationState(walkParamID);
+        public void PlayDeath() => ChangeAnimationState(deathParamID);
+        #endregion
 
-    float GetCurrentAnimationDuration()
-    {
-        return animator.GetCurrentAnimatorStateInfo(0).length;
-    }
+        #region Attack animations
+        public void PlayAbilityAnimation(AbilityTypes ability)
+        {
+            switch (ability)
+            {
+                case AbilityTypes.Slash:
+                    PlaySlash();
+                    break;
+                case AbilityTypes.Whirl:
+                    PlayWhirl();
+                    break;
+            }
+        }
+        #endregion
 
-    IEnumerator DelayedTransitionToAnimation(float delay, int newAnimationParamID)
-    {
-        yield return new WaitForSeconds(delay);
-        animator.Play(newAnimationParamID);
-    }
+        void ChangeAnimationState(int newState)
+        {
+            //Change to new animation state only if it's a different one
+            if (currentState != newState)
+            {
+                if (newState == idleParamID)
+                {
+                    animator.CrossFade(newState, 0.1f); //Smoothly go back to idle
+                }
+                else
+                {
+                    //Instantly play animations to make it snappy and responsive
+                    animator.Play(newState);
+                }
+                currentState = newState;
+            }
+        }
 
-    #region Attack animations
-    void PlaySlash()
-    {
-        slashSequenceIndex = slashSequenceIndex == 2 ? 1 : 2;
-        ChangeAnimationState(slashSequenceIndex == 2 ? slash2ParamID : slash1ParamID);
-    }
+        float GetCurrentAnimationDuration()
+        {
+            return animator.GetCurrentAnimatorStateInfo(0).length;
+        }
 
-    void PlayWhirl() => ChangeAnimationState(whirlwindAttckParamID);
-    //public void PlayIcyBlast() => ChangeAnimationState(IcyShieldParamID);
-    //public void PlayFireLob() => ChangeAnimationState(FireLobParamID);
-    #endregion
+        IEnumerator DelayedTransitionToAnimation(float delay, int newAnimationParamID)
+        {
+            yield return new WaitForSeconds(delay);
+            animator.Play(newAnimationParamID);
+        }
+
+        #region Attack animations
+        void PlaySlash()
+        {
+            slashSequenceIndex = slashSequenceIndex == 2 ? 1 : 2;
+            ChangeAnimationState(slashSequenceIndex == 2 ? slash2ParamID : slash1ParamID);
+        }
+
+        void PlayWhirl() => ChangeAnimationState(whirlwindAttckParamID);
+        //public void PlayIcyBlast() => ChangeAnimationState(IcyShieldParamID);
+        //public void PlayFireLob() => ChangeAnimationState(FireLobParamID);
+        #endregion
+    }
 }

@@ -2,55 +2,58 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-//OnPointer events work by implementing IPointerxHandler. You cannot extract them into your own custom interface.
-public abstract class CustomUIButtonColorTint : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
-{
-    protected Image background;
-    protected Text label;
 
-    public bool isDisabled { get; set; } = false;
-
-    protected void Awake()
+namespace MyNameSpace
+{//OnPointer events work by implementing IPointerxHandler. You cannot extract them into your own custom interface.
+    public abstract class CustomUIButtonColorTint : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     {
-        background = GetComponent<Image>();
-        label = GetComponentInChildren<Text>();
+        protected Image background;
+        protected Text label;
 
-        SetDefaultColor();
-    }
+        public bool isDisabled { get; set; } = false;
 
-    #region Public
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (!isDisabled)
+        protected void Awake()
         {
-            SetHighlightColor();
-        }
-    }
+            background = GetComponent<Image>();
+            label = GetComponentInChildren<Text>();
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (!isDisabled)
-        {
             SetDefaultColor();
         }
+
+        #region Public
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (!isDisabled)
+            {
+                SetHighlightColor();
+            }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (!isDisabled)
+            {
+                SetDefaultColor();
+            }
+        }
+
+        public void DisableButton()
+        {
+            isDisabled = true;
+            SetDisabledColor();
+        }
+
+        public void EnableButton()
+        {
+            isDisabled = false;
+            SetDefaultColor();
+        }
+        #endregion
+
+        protected abstract void SetDefaultColor();
+
+        protected abstract void SetHighlightColor();
+
+        protected abstract void SetDisabledColor();
     }
-
-    public void DisableButton()
-    {
-        isDisabled = true;
-        SetDisabledColor();
-    }
-
-    public void EnableButton()
-    {
-        isDisabled = false;
-        SetDefaultColor();
-    }
-    #endregion
-
-    protected abstract void SetDefaultColor();
-
-    protected abstract void SetHighlightColor();
-
-    protected abstract void SetDisabledColor();
 }

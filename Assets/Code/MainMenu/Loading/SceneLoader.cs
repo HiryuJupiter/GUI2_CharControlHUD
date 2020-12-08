@@ -5,37 +5,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Assertions.Must;
 
-public class SceneLoader : MonoBehaviour
+
+namespace MyNameSpace
 {
-    public Image progressBar;
-    public Text progressText;
-
-    public void LoadLevel(int sceneIndex)
+    public class SceneLoader : MonoBehaviour
     {
-        StartCoroutine(LoadAsync(sceneIndex));
-    }
+        public Image progressBar;
+        public Text progressText;
 
-    IEnumerator LoadAsync (int sceneIndex)
-    {
-        AsyncOperation operation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneIndex);
-        operation.allowSceneActivation = false;
-
-        while (!operation.isDone)
+        public void LoadLevel(int sceneIndex)
         {
-            //the last 10 % can't be multi-threaded
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            progressBar.fillAmount = progress;
-            progressText.text = progress * 100 + "%";
+            StartCoroutine(LoadAsync(sceneIndex));
+        }
 
-            if (progress >= 0.9f)
+        IEnumerator LoadAsync(int sceneIndex)
+        {
+            AsyncOperation operation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneIndex);
+            operation.allowSceneActivation = false;
+
+            while (!operation.isDone)
             {
-                progressText.text = "Press anykey to continue";
-                if (Input.anyKeyDown)
+                //the last 10 % can't be multi-threaded
+                float progress = Mathf.Clamp01(operation.progress / 0.9f);
+                progressBar.fillAmount = progress;
+                progressText.text = progress * 100 + "%";
+
+                if (progress >= 0.9f)
                 {
-                    operation.allowSceneActivation = true;
+                    progressText.text = "Press anykey to continue";
+                    if (Input.anyKeyDown)
+                    {
+                        operation.allowSceneActivation = true;
+                    }
                 }
+                yield return null;
             }
-            yield return null;
         }
     }
 }

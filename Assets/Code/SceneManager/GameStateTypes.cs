@@ -1,7 +1,11 @@
-﻿public enum GameStateTypes
+﻿
+namespace MyNameSpace
 {
-    Alive, 
-    Dialogue,
-    Respawning,
-    GameOver
+    public enum GameStateTypes
+    {
+        Alive,
+        Dialogue,
+        Respawning,
+        GameOver
+    }
 }

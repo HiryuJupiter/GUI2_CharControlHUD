@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DummyEnemy : Enemy
+namespace MyNameSpace
 {
+    public class DummyEnemy : Enemy
+    {
+    }
 }

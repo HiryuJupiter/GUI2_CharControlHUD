@@ -1,5 +1,9 @@
-﻿public enum GameStates
+﻿
+namespace MyNameSpace
 {
-    CharacterControl,
-    GameOverScoreboard
+    public enum GameStates
+    {
+        CharacterControl,
+        GameOverScoreboard
+    }
 }

@@ -542,11 +542,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56665931950d3cb40a7c202f51bc7040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsVisibleOnScreen: 0
   isInventorySlot: 0
   highlightColor: {r: 1, g: 0.87056035, b: 0.6462264, a: 1}
   image: {fileID: 1794843249740822359}
   cooldownMask: {fileID: 4799427501504397274}
   countText: {fileID: 1794843249816250562}
   descriptionGameObject: {fileID: 1794843250822726733}
-  descriptionText: {fileID: 1794843249615069739}
-  itemNameText: {fileID: 1794843249566801727}
+  descriptionText: {fileID: 1794843249566801727}
+  itemNameText: {fileID: 1794843249615069739}

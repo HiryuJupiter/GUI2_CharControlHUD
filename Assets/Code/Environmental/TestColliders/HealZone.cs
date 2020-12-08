@@ -2,36 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealZone : MonoBehaviour
+
+namespace MyNameSpace
 {
-    LayerMask playerBodyLayer;
-    PlayerController player;
-
-    protected void Awake()
+    public class HealZone : MonoBehaviour
     {
-        playerBodyLayer = CharacterSettings.instance.PlayerBodyLayer;
-    }
+        LayerMask playerBodyLayer;
+        PlayerController player;
 
-     void Start()
-    {
-        //Reference
-        player = PlayerController.Instance;
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (playerBodyLayer == (playerBodyLayer | 1 << other.gameObject.layer))
+        protected void Awake()
         {
-            player.HealPlayer(999);
+            playerBodyLayer = CharacterSettings.instance.PlayerBodyLayer;
         }
+
+        void Start()
+        {
+            //Reference
+            player = PlayerController.Instance;
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            //Heal the player when the player hits this trigger
+            if (playerBodyLayer == (playerBodyLayer | 1 << other.gameObject.layer))
+            {
+                player.HealPlayer(999);
+            }
+        }
+
+        //void OnTriggerExit(Collider other)
+        //{
+        //    if (playerBodyLayer == (playerBodyLayer | 1 << other.gameObject.layer))
+        //    {
+        //        UICanvas.SetActive(false);
+        //        slotManager.SetIsOpen(false);
+        //    }
+        //}
     }
 
-    //void OnTriggerExit(Collider other)
-    //{
-    //    if (playerBodyLayer == (playerBodyLayer | 1 << other.gameObject.layer))
-    //    {
-    //        UICanvas.SetActive(false);
-    //        slotManager.SetIsOpen(false);
-    //    }
-    //}
 }

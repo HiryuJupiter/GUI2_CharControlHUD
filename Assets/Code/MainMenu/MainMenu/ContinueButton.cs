@@ -2,50 +2,54 @@
 using UnityEngine.UI;
 using System.Collections;
 
-[RequireComponent(typeof(Button))]
-[RequireComponent(typeof(Image))]
-[RequireComponent(typeof(CustomUIButtonColorTint))]
-public class ContinueButton : MonoBehaviour
+
+namespace MyNameSpace
 {
-    Button button;
-    Image img;
-    CustomUIButtonColorTint colorTint;
-
-    void Awake()
+    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(Image))]
+    [RequireComponent(typeof(CustomUIButtonColorTint))]
+    public class ContinueButton : MonoBehaviour
     {
-        button  = GetComponent<Button>();
-        img     = GetComponent<Image>();
-        colorTint = GetComponent<CustomUIButtonColorTint>();
-    }
+        Button button;
+        Image img;
+        CustomUIButtonColorTint colorTint;
 
-    void Start()
-    {
-        RefreshDisplay();
-    }
-
-    public void RefreshDisplay ()
-    {
-        if (GameDataIO.HasSaveFile())
+        void Awake()
         {
-            //EnableButton();
+            button = GetComponent<Button>();
+            img = GetComponent<Image>();
+            colorTint = GetComponent<CustomUIButtonColorTint>();
         }
-        else
+
+        void Start()
         {
-            GreyOutButton();
+            RefreshDisplay();
         }
-    }
 
-    void EnableButton ()
-    {
-        colorTint.DisableButton();
-        //button.enabled = true;
-        //img.color = Color.white;
-    }
+        public void RefreshDisplay()
+        {
+            if (GameDataIO.HasSaveFile())
+            {
+                //EnableButton();
+            }
+            else
+            {
+                GreyOutButton();
+            }
+        }
 
-    void GreyOutButton ()
-    {
-        colorTint.DisableButton();
-        //button.enabled = false;
-        //img.color = Color.grey;
+        void EnableButton()
+        {
+            colorTint.DisableButton();
+            //button.enabled = true;
+            //img.color = Color.white;
+        }
+
+        void GreyOutButton()
+        {
+            colorTint.DisableButton();
+            //button.enabled = false;
+            //img.color = Color.grey;
+        }
     }
 }

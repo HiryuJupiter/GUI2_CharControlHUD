@@ -1,6 +1,10 @@
-﻿public enum PauseMenuStates
+﻿
+namespace MyNameSpace
 {
-    Unpaused,
-    PauseMain,
-    OptionsMenu,
+    public enum PauseMenuStates
+    {
+        Unpaused,
+        PauseMain,
+        OptionsMenu,
+    }
 }

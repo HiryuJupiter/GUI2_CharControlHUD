@@ -4,54 +4,59 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class UISlotManager_ConsumableBar : UISlotManagerBase
+
+
+namespace MyNameSpace
 {
-    public static UISlotManager_ConsumableBar Instance;
-
-    void Awake()
+    public class UISlotManager_ConsumableBar : UISlotManagerBase
     {
-        Instance = this;
-    }
+        public static UISlotManager_ConsumableBar Instance;
 
-    void Start()
-    {
-        SetIsOpen(true);
-    }
+        void Awake()
+        {
+            Instance = this;
+        }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        void Start()
         {
-            TryUseItemInSlot(0);
+            SetIsOpen(true);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            TryUseItemInSlot(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            TryUseItemInSlot(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            TryUseItemInSlot(3);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            TryUseItemInSlot(4);
-        }
-    }
 
-    void TryUseItemInSlot (int itemSlot)
-    {
-        try
+        void Update()
         {
-            Slots[itemSlot].UseItem();
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                TryUseItemInSlot(0);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                TryUseItemInSlot(1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                TryUseItemInSlot(2);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                TryUseItemInSlot(3);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                TryUseItemInSlot(4);
+            }
         }
-        catch (System.Exception e)
-        {
 
-            Debug.Log(" Exception. Why is there an error. /weep " + e);
+        void TryUseItemInSlot(int itemSlot)
+        {
+            try
+            {
+                Slots[itemSlot].UseItem();
+            }
+            catch (System.Exception e)
+            {
+
+                Debug.Log(" Exception. Why is there an error. /weep " + e);
+            }
         }
     }
 }

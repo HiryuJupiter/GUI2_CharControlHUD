@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UISlotManager_Generic : UISlotManagerBase
+
+namespace MyNameSpace
 {
-    //The slots under this manager has no special properties, no hot keys to open.
-    void Start()
+    public class UISlotManager_Generic : UISlotManagerBase
     {
-        SetIsOpen(false);
+        //The slots under this manager has no special properties, no hot keys to open.
+        void Start()
+        {
+            SetIsOpen(false);
+        }
     }
 }

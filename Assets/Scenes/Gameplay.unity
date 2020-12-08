@@ -2754,7 +2754,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Equipt items \nShift - sprint, ctrl - crouch speed\n"
+  m_Text: "You can drag items between inventories, equip weapons and \narmor, drop
+    them on to the ground, sell items for gold. \n\nEquipt items \nShift - sprint,
+    ctrl - crouch speed\n"
 --- !u!222 &199010244
 CanvasRenderer:
   m_ObjectHideFlags: 0

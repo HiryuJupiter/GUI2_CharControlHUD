@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class QuestManager : MonoBehaviour
+
+namespace MyNameSpace
 {
-    void Start()
+    public class QuestManager : MonoBehaviour
     {
+        void Start()
+        {
 
-    }
+        }
 
-    void Update()
-    {
+        void Update()
+        {
 
+        }
     }
 }

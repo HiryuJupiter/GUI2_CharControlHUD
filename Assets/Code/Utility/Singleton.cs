@@ -2,28 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+
+namespace MyNameSpace
 {
-    protected static T instance;
-    public static T Instance { get { return instance; } }
-
-    protected void DeleteDuplicateSingleton()
+    public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        protected static T instance;
+        public static T Instance { get { return instance; } }
+
+        protected void DeleteDuplicateSingleton()
         {
-            DestroyImmediate(gameObject);
-            //Debug.Log("Duplicate " + typeof(T).ToString() + " has being destroyed.");
+            if (Instance != null && Instance != this)
+            {
+                DestroyImmediate(gameObject);
+                //Debug.Log("Duplicate " + typeof(T).ToString() + " has being destroyed.");
+            }
         }
+
+        /*Usage
+         * protected void Awake()
+        {
+            DeleteDuplicateSingleton();
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(this);
+            }
+        }*/
     }
-
-    /*Usage
-     * protected void Awake()
-    {
-        DeleteDuplicateSingleton();
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-    }*/
 }
